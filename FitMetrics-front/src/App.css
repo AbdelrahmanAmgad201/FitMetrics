@@ -1,42 +1,55 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
+  color: white;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.main-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.top-bar {
+  height: 7%;
+  width: 100%;
+  background-color: #1B262C;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.main-body {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 93%;
 }
 
-.card {
-  padding: 2em;
+.navigation-menu {
+  width: 12%;
+  height: 100%;
+  background-color: #1B262C;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.navigation-menu button {
+  padding: 10px;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.application {
+  background-color: #213A45;
+  width: 100%;
+  height: 100%;
 }
