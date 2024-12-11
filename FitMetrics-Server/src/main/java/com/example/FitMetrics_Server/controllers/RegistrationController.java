@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.Map;
 
 @RestController
@@ -18,6 +17,9 @@ public class RegistrationController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private RegistrationService registrationService;
+
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Map<String, Object> userdata) {
@@ -25,11 +27,11 @@ public class RegistrationController {
             String username = (String) userdata.get("username");
             String password = (String) userdata.get("password");
             // Registering user
-            // TODO: Implement registration service
+            Long id = registrationService.registerUser(username, password);
 
 
-            // creating jwt
-            Long id = 1L; // replace with actual user id from database
+
+
             String jwt = authService.generateJWT(id, username);
             Claims claims = authService.parseToken(jwt);
             System.out.println("Successfully registered"
@@ -53,8 +55,9 @@ public class RegistrationController {
             // Login user
             // TODO: login user
             // creating jwt
-            Long id = 1L; // replace with actual user id from database
+            Long id = registrationService.login(username, password);
             String jwt = authService.generateJWT(id, username);
+            System.out.println("Successfully logged in user with id: " + id + " and username: " + username);
             return ResponseEntity.ok(Map.of("jwt", jwt));
         } catch(Exception e) {
             System.out.println("Error logging in user: " + e.getMessage());
@@ -75,6 +78,7 @@ public class RegistrationController {
             Double weight = (Double) userdata.get("weight");
             Double height = (Double) userdata.get("height");
             // save data to database
+            registrationService.postData(id, firstName, lastName, isKg, weight, height);
 
             System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +  " and height: " + height + " first name: " + firstName + " last name: " + lastName);
             return ResponseEntity.ok("Data saved successfully");
