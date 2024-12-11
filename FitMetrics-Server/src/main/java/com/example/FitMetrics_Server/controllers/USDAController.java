@@ -1,5 +1,6 @@
-package com.example.FitMetrics_Server;
+package com.example.FitMetrics_Server.controllers;
 
+import com.example.FitMetrics_Server.services.USDAService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
