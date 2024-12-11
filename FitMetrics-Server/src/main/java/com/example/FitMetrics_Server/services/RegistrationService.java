@@ -5,6 +5,7 @@ import com.example.FitMetrics_Server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -60,5 +61,17 @@ public class RegistrationService {
 
         // Throw exception if invalid login
         throw new RuntimeException("Invalid username or password");
+    }
+
+
+    public void changePassword(Long id, String oldPassword, String newPassword) {
+
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent() && passwordEncoder.matches(oldPassword, user.get().getHashedPassword())) {
+            user.get().setHashedPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user.get());
+        } else {
+            throw new RuntimeException("Invalid password");
+        }
     }
 }

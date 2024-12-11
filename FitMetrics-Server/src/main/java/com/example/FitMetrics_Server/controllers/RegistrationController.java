@@ -90,5 +90,23 @@ public class RegistrationController {
             return ResponseEntity.badRequest().body("Error saving data");
         }
     }
+
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long id = Long.parseLong(claims.getId());
+            String oldPassword = (String) userdata.get("oldPassword");
+            String newPassword = (String) userdata.get("newPassword");
+            registrationService.changePassword(id, oldPassword, newPassword);
+            System.out.println("Successfully changed password for user with id: " + id + " and username: " + claims.getSubject());
+            return ResponseEntity.ok("Password changed successfully");
+        } catch(Exception e) {
+            System.out.println("Error changing password: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error changing password");
+        }
+    }
 }
 
