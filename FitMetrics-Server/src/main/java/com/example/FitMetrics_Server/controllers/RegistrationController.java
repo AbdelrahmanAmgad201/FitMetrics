@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.StyledEditorKit;
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -18,6 +18,9 @@ public class RegistrationController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private RegistrationService registrationService;
+
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Map<String, Object> userdata) {
@@ -25,11 +28,11 @@ public class RegistrationController {
             String username = (String) userdata.get("username");
             String password = (String) userdata.get("password");
             // Registering user
-            // TODO: Implement registration service
+            Long id = registrationService.registerUser(username, password);
 
 
-            // creating jwt
-            Long id = 1L; // replace with actual user id from database
+
+
             String jwt = authService.generateJWT(id, username);
             Claims claims = authService.parseToken(jwt);
             System.out.println("Successfully registered"
@@ -53,8 +56,9 @@ public class RegistrationController {
             // Login user
             // TODO: login user
             // creating jwt
-            Long id = 1L; // replace with actual user id from database
+            Long id = registrationService.login(username, password);
             String jwt = authService.generateJWT(id, username);
+            System.out.println("Successfully logged in user with id: " + id + " and username: " + username);
             return ResponseEntity.ok(Map.of("jwt", jwt));
         } catch(Exception e) {
             System.out.println("Error logging in user: " + e.getMessage());
@@ -74,13 +78,34 @@ public class RegistrationController {
             boolean isKg = (boolean) userdata.get("isKg");
             Double weight = (Double) userdata.get("weight");
             Double height = (Double) userdata.get("height");
+            LocalDate dateOfBirth = LocalDate.parse((String) userdata.get("dateOfBirth"));
             // save data to database
+            registrationService.postData(id, firstName, lastName, isKg, weight, height, dateOfBirth);
 
-            System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +  " and height: " + height + " first name: " + firstName + " last name: " + lastName);
+            System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +
+                    " and height: " + height + " first name: " + firstName + " last name: " + lastName + " date of birth: " + dateOfBirth);
             return ResponseEntity.ok("Data saved successfully");
         } catch(Exception e) {
             System.out.println("Error saving data: " + e.getMessage());
             return ResponseEntity.badRequest().body("Error saving data");
+        }
+    }
+
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long id = Long.parseLong(claims.getId());
+            String oldPassword = (String) userdata.get("oldPassword");
+            String newPassword = (String) userdata.get("newPassword");
+            registrationService.changePassword(id, oldPassword, newPassword);
+            System.out.println("Successfully changed password for user with id: " + id + " and username: " + claims.getSubject());
+            return ResponseEntity.ok("Password changed successfully");
+        } catch(Exception e) {
+            System.out.println("Error changing password: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error changing password");
         }
     }
 }
