@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
+import MyCalendar from './scheduleManager/calendar.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
 
@@ -28,6 +31,8 @@ function App() {
         <div className="application">
           {/* apps here */}
           {/* <WorkoutPlan /> */}
+          {<MyCalendar></MyCalendar>}
+
         </div>
       </div>
     </div>

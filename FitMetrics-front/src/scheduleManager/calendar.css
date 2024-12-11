@@ -1,0 +1,137 @@
+/* Custom Calendar Styles */
+* {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    color: white;
+}
+
+
+
+.react-calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;  /* Ensure it takes up available height */
+    background: #1B262C;
+    border: 2px solid #ccc; /* Add visible border */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0;  /* No extra margin */
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 1;
+}
+
+.react-calendar__navigation {
+    display: flex;
+    justify-content: center;  /* Horizontally center the buttons */
+    align-items: center;      /* Vertically center the buttons */
+    width: 100%;
+    height: 50px;
+    padding: 20px 0;
+}
+
+.react-calendar__navigation button {
+    background: #213A45;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+.react-calendar__navigation button:hover {
+    background: #0056b3;
+}
+
+.react-calendar__tile {
+    display: flex;  /* Corrected 'flexbox' to 'flex' */
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: #333;
+    padding: 3%; /* Adjust padding to ensure it doesn't overflow on smaller screens */
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid transparent;  /* Default border */
+    box-sizing: border-box; /* Ensure padding is included in total size */
+}
+
+.react-calendar__month-view__weekdays {
+    display: flex;
+    justify-content: center;  /* Center the weekdays */
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    text-decoration: none !important;
+}
+
+.react-calendar__month-view__weekdays abbr {
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 0;
+    text-decoration: none !important;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    text-decoration: none !important;
+    padding: 0 10px;
+}
+
+.react-calendar__tile abbr {
+    padding: 10px;
+    border-radius: 15%;
+}
+
+.react-calendar__tile abbr:hover {
+    transition: all 0.75s ease-in;
+    cursor: pointer;
+    background: #213A45;
+    border: 2px solid whitesmoke;
+    border-radius: 30%;
+    box-shadow: -3px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.react-calendar__tile--now abbr {
+    border-radius: 25%;
+    background: #213A45 !important;
+    box-shadow: -3px 10px 10px rgba(0, 0, 0, 0.5); /* Adds shadow effect */
+}
+
+.react-calendar__tile:disabled {
+    background: #e0e0e0;
+    color: #ccc;
+}
+
+.overlay {
+    position: absolute;
+    top: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -50%);
+
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    filter: blur(0px);  /* Apply blur effect */
+
+
+}
+
+.calendar-wrapper.blurred {
+    filter: blur(5px);  /* Apply blur effect */
+    pointer-events: none;  /* Prevent interaction with the blurred calendar */
+    transition: filter 0.3s ease;  /* Smooth transition for the blur effect */
+  }

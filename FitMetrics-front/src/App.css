@@ -1,35 +1,52 @@
+/* Reset CSS */
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   border: none;
-  padding: 0px;
-  margin: 0px;
   background-color: transparent;
   font-family: 'Inter', sans-serif;
   color: white;
 }
 
+/* Ensure the page stays within the viewport */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  /* Prevent scrolling */
+}
+
+
+
+/* Main App Container */
 .main-app {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
+/* Top Bar */
 .top-bar {
   height: 7%;
   width: 100%;
   background-color: #1B262C;
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
 }
 
+/* Main Body */
 .main-body {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 93%;
+  overflow: hidden;
 }
 
+/* Navigation Menu */
 .navigation-menu {
   width: 12%;
   height: 100%;
@@ -37,19 +54,32 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 20px;
 }
 
 .navigation-menu button {
-  padding: 10px;
+  padding: 10px 20px;
   color: white;
   font-size: 16px;
+  background-color: #213A45;
+  border-radius: 5px;
   display: flex;
-  flex-direction: row;
-  gap: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.navigation-menu button:hover {
+  background-color: #2C5364;
+}
+
+/* Application Content Area */
 .application {
+  flex: 1;  /* Fills remaining space */
   background-color: #213A45;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
