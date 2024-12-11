@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -33,13 +34,14 @@ public class RegistrationService {
 
 
 
-    public boolean postData(Long userId, String firstName, String lastName, Boolean UserPreference, Double weight, Double height) throws RuntimeException {
+    public boolean postData(Long userId, String firstName, String lastName, Boolean UserPreference, Double weight, Double height, LocalDate dateOfBirth) throws RuntimeException {
 
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             user.get().setFirstName(firstName);
             user.get().setLastName(lastName);
             user.get().setUserPreference(UserPreference);
+            user.get().setDateOfBirth(dateOfBirth);
 //            user.get().setWeight(weight);
 //            user.get().setHeight(height);
             System.out.println("PREFERENCE: " + user.get().getUserPreference());

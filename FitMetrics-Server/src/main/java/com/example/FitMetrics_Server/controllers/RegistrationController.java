@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -77,10 +78,12 @@ public class RegistrationController {
             boolean isKg = (boolean) userdata.get("isKg");
             Double weight = (Double) userdata.get("weight");
             Double height = (Double) userdata.get("height");
+            LocalDate dateOfBirth = LocalDate.parse((String) userdata.get("dateOfBirth"));
             // save data to database
-            registrationService.postData(id, firstName, lastName, isKg, weight, height);
+            registrationService.postData(id, firstName, lastName, isKg, weight, height, dateOfBirth);
 
-            System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +  " and height: " + height + " first name: " + firstName + " last name: " + lastName);
+            System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +
+                    " and height: " + height + " first name: " + firstName + " last name: " + lastName + " date of birth: " + dateOfBirth);
             return ResponseEntity.ok("Data saved successfully");
         } catch(Exception e) {
             System.out.println("Error saving data: " + e.getMessage());
