@@ -1,4 +1,4 @@
-package com.example.FitMetrics_Server;
+package com.example.FitMetrics_Server.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
