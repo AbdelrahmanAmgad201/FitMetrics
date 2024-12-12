@@ -27,7 +27,7 @@ function App() {
         </div>
         <div className="application">
           {/* apps here */}
-          {/* <WorkoutPlan /> */}
+          <WorkoutPlan />
         </div>
       </div>
     </div>
