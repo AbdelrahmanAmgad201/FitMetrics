@@ -5,14 +5,18 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-public class user_exercise_history{
+@Table(name = "user_exercise_history")
+public class UserExerciseHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    private long userId;
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     private String exerciseName;

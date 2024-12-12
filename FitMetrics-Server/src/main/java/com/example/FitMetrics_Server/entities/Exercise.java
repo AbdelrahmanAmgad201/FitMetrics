@@ -10,11 +10,13 @@ public class Exercise {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "plan_id", referencedColumnName = "planId")
-    private workout_plans workoutPlan;
+    @JoinColumn(name = "plan_id", nullable = false)
+    private WorkoutPlan workoutPlan;
 
     private int day;
+
     private String exerciseName;
     private String exerciseId;
+
 
 }
