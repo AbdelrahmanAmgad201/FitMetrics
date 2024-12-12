@@ -1,4 +1,4 @@
-package com.example.FitMetrics_Server.repositories;
+package com.example.FitMetrics_Server.entities;
 
 import jakarta.persistence.*;
 
