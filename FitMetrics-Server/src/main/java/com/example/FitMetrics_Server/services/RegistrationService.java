@@ -1,11 +1,12 @@
 package com.example.FitMetrics_Server.services;
 
 import com.example.FitMetrics_Server.entities.User;
+import com.example.FitMetrics_Server.entities.user_weight_height;
 import com.example.FitMetrics_Server.repositories.UserRepository;
+import com.example.FitMetrics_Server.repositories.UserWeightHeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -15,6 +16,9 @@ public class RegistrationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserWeightHeightRepository userWeightHeightRepository;
 
     // BCryptPasswordEncoder instance for hashing passwords
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -26,9 +30,7 @@ public class RegistrationService {
             throw new Exception("User already exists");
         }
 
-        User user = new User();
-        user.setUserName(userName);
-        user.setHashedPassword(passwordEncoder.encode(password)); // Hash the password before saving
+        User user = new User(userName, passwordEncoder.encode(password));
         return userRepository.save(user).getId();
     }
 
@@ -43,10 +45,11 @@ public class RegistrationService {
             user.get().setLastName(lastName);
             user.get().setUserPreference(UserPreference);
             user.get().setDateOfBirth(dateOfBirth);
-//            user.get().setWeight(weight);
-//            user.get().setHeight(height);
             System.out.println("PREFERENCE: " + user.get().getUserPreference());
             userRepository.save(user.get());
+
+            user_weight_height entry = new user_weight_height(user.get(), weight, height, LocalDate.now());
+            userWeightHeightRepository.save(entry);
             return true;
         }
         throw new RuntimeException("User not found");

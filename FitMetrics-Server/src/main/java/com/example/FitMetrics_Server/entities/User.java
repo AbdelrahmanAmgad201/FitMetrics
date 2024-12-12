@@ -2,6 +2,7 @@ package com.example.FitMetrics_Server.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,31 +20,31 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-
-
     @Column(name = "hash_password", unique = true, nullable = false)
     private String hashedPassword;
-
-
 
     @Column(name = "user_preference")
     private Boolean userPreference;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "active_workout_plan_id") // This maps the foreign key
-//    private WorkoutPlan activeWorkoutPlan;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "active_diet_plan_id") // This maps the foreign key
-//    private DietPlan activeDietPlan;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<user_weight_height> userWeightHeightEntries;
 
+    // Constructors
     public User() {
     }
+
+    public User(String userName, String password, String firstName, String lastName, Boolean userPreference, LocalDate dateOfBirth) {
+        this.userName = userName;
+        this.hashedPassword = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userPreference = userPreference;
+        this.dateOfBirth = dateOfBirth;
+    }
+
 
     public User(String userName, String password) {
         this.userName = userName;
@@ -89,8 +90,6 @@ public class User {
         this.hashedPassword = hashedPassword;
     }
 
-
-
     public Boolean getUserPreference() {
         return userPreference;
     }
@@ -105,6 +104,14 @@ public class User {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public List<user_weight_height> getUserWeightHeightEntries() {
+        return userWeightHeightEntries;
+    }
+
+    public void setUserWeightHeightEntries(List<user_weight_height> userWeightHeightEntries) {
+        this.userWeightHeightEntries = userWeightHeightEntries;
     }
 
 //    public WorkoutPlan getActiveWorkoutPlan() {
