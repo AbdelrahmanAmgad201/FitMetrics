@@ -8,6 +8,11 @@
     color: white;
 }
 
+.calendar-wrapper{
+    height: 90vh;
+    width: 80vw;
+
+} 
 
 
 .react-calendar {
@@ -18,6 +23,7 @@
     border: 2px solid #ccc; /* Add visible border */
     border-radius: 8px;
     padding: 20px;
+
     margin: 0;  /* No extra margin */
     box-sizing: border-box;
     overflow: hidden;
@@ -112,26 +118,99 @@
     color: #ccc;
 }
 
+
 .overlay {
     position: absolute;
-    top: 20px;
     top: 50%;
     left: 50%;
-    transform: translate(-20%, -50%);
+    transform: translate(-50%, -50%);
 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: -10px 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 10;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(33, 58, 69, 0.1);
     filter: blur(0px);  /* Apply blur effect */
 
-
+    max-width: 100vw;  /* Constrain width to viewport width */
+    max-height: 100vh; /* Constrain height to viewport height */
+    overflow: auto;    /* Add scrollbars if content overflows */
 }
+
+/* WebKit browsers */
+.overlay::-webkit-scrollbar {
+    width: 12px;
+}
+
+.overlay::-webkit-scrollbar-track {
+    background: rgba(33, 58, 69, 0.1);
+}
+
+.overlay::-webkit-scrollbar-thumb {
+    background-color: darkblue;
+    border-radius: 6px;
+    border: 3px solid rgba(33, 58, 69, 0.1);
+}
+
+/* Firefox */
+.overlay {
+    scrollbar-color: darkblue rgba(33, 58, 69, 0.1);
+    scrollbar-width: thin;
+}
+
 
 .calendar-wrapper.blurred {
     filter: blur(5px);  /* Apply blur effect */
     pointer-events: none;  /* Prevent interaction with the blurred calendar */
     transition: filter 0.3s ease;  /* Smooth transition for the blur effect */
   }
+
+.card_details .mb-2 {
+color: black;
+margin-top: 10px;
+display: flex;
+justify-content: flex-start;
+font-weight: bold;
+text-decoration: underline;
+font-size: 20px;
+}
+  
+
+.section_details{
+        color: 'white';
+        padding: 5px 0;
+        display:flex; 
+        justify-content:flex-start
+}
+
+.card_button {
+    background-color: #034387 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    transition: all 1s ease-in-out !important;
+}
+
+.card_button:hover {
+    background-color: #0056b3 !important;
+    border: 3px solid #003d5e !important;
+}
+
+.react-calendar .highlight abbr {
+    border-bottom: 3px solid yellowgreen !important;
+    padding-bottom: 2px;
+}
+
+.react-calendar .highlight abbr:hover {
+    transition: all 0.75s ease-in;
+    cursor: pointer;
+    background: #213A45;
+    border: 2px solid yellowgreen;
+    border-radius: 30%;
+    box-shadow: -3px 10px 10px rgba(0, 0, 0, 0.5);
+}
+  
+  
