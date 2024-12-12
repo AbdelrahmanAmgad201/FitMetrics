@@ -3,11 +3,14 @@ package com.example.FitMetrics_Server.entities;
 import jakarta.persistence.*;
 
 @Entity
-public class food_data {
+@Table(name = "food_data")
+public class FoodData {
 
     @Id
+    @Column(name = "food_id")
     private long foodId;
 
+    @Column(name = "food_name")
     private String foodName;
 
     private double calories;
