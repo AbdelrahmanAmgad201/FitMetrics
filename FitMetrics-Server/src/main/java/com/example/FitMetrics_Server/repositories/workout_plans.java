@@ -7,13 +7,16 @@ public class workout_plans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "plan_id")
     private long planId;  // Auto-generated planId for each workout plan
 
-    private String planName;      // Name of the workout plan
-    private String description;   // Description of the workout plan
+    @Column(name = "plan_name")
+    private String planName;
+    private String description;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", referencedColumnName = "userId")
-    private User created_by;
+    @JoinColumn(name = "created_by", referencedColumnName = "user_id")
+    @Column(name = "created_by")
+    private User createdBy;
 
 }

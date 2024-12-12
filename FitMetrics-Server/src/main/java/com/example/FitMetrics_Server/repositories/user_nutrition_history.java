@@ -11,14 +11,19 @@ public class user_nutrition_history {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;  // Unique identifier for the user nutrition record
 
-    private long userId;  // User ID (foreign key)
-    private Date date;     // Date of food consumption
+    @Column(name = "user_id")
+    private long userId;
+    private Date date;
 
-    private String foodId;  // foodId (foreign key from FoodData)
+    @Column(name = "food_id")
+    private String foodId;
+
+    @Column(name = "food_name")
+    private String foodName;
 
     @ManyToOne
     @JoinColumn(name = "foodId", referencedColumnName = "foodId", insertable = false, updatable = false)
-    private food_data foodData;  // Mapping to FoodData entity (many-to-one relationship)
+    private food_data foodData;
 
-    private double quantity;  // Quantity of food consumed (optional, you can add more fields if needed
+    private double quantity;
 }
