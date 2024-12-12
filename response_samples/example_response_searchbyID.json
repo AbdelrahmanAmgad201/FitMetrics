@@ -1,0 +1,18 @@
+{
+  "fdcId":579238,
+  "description":"MEAT",
+  "dataType":"Branded",
+  "publicationDate":"2019-04-01",
+  "brandOwner":"NOT A BRANDED ITEM",
+  "gtinUpc":"070247912367",
+  "foodNutrients":[
+    {
+      "number":"203",
+      "name":"Protein",
+      "amount":17.9,
+      "unitName":"G",
+      "derivationCode":"LCCS",
+      "derivationDescription":"Calculated from value per serving size measure"
+    }
+  ]
+}

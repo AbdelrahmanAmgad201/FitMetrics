@@ -1,0 +1,87 @@
+package com.example.FitMetrics_Server.controllers;
+
+
+import com.example.FitMetrics_Server.services.AuthService;
+import com.example.FitMetrics_Server.services.RegistrationService;
+import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.StyledEditorKit;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/user")
+public class RegistrationController {
+
+    @Autowired
+    private AuthService authService;
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody Map<String, Object> userdata) {
+        try {
+            String username = (String) userdata.get("username");
+            String password = (String) userdata.get("password");
+            // Registering user
+            // TODO: Implement registration service
+
+
+            // creating jwt
+            Long id = 1L; // replace with actual user id from database
+            String jwt = authService.generateJWT(id, username);
+            Claims claims = authService.parseToken(jwt);
+            System.out.println("Successfully registered"
+                    + "\nID: " + claims.getId()
+                    + "\nSubject: " + claims.getSubject()
+                    + "\nExpiration: " + claims.getExpiration()
+                    + "\nIssued At: " + claims.getIssuedAt()
+            );
+            return ResponseEntity.ok(Map.of("jwt", jwt));
+        } catch(Exception e) {
+            System.out.println("Error registering user: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error registering user");
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, Object> userdata) {
+        try {
+            String username = (String) userdata.get("username");
+            String password = (String) userdata.get("password");
+            // Login user
+            // TODO: login user
+            // creating jwt
+            Long id = 1L; // replace with actual user id from database
+            String jwt = authService.generateJWT(id, username);
+            return ResponseEntity.ok(Map.of("jwt", jwt));
+        } catch(Exception e) {
+            System.out.println("Error logging in user: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error logging in user");
+        }
+    }
+
+    @PostMapping("/post-data")
+    public ResponseEntity<?> postData( @RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long id = Long.parseLong(claims.getId());
+            // parse data from request
+            String firstName = (String) userdata.get("firstName");
+            String lastName = (String) userdata.get("lastName");
+            boolean isKg = (boolean) userdata.get("isKg");
+            Double weight = (Double) userdata.get("weight");
+            Double height = (Double) userdata.get("height");
+            // save data to database
+
+            System.out.println("Successfully saved data for user with id: " + id + " and username: " + claims.getSubject() + " with weight: " + weight  + " in " + (isKg ? "Kg" : "Lbs") +  " and height: " + height + " first name: " + firstName + " last name: " + lastName);
+            return ResponseEntity.ok("Data saved successfully");
+        } catch(Exception e) {
+            System.out.println("Error saving data: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error saving data");
+        }
+    }
+}
+
