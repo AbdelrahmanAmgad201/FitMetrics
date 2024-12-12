@@ -19,12 +19,10 @@ public class UserExerciseHistory {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    private String exerciseName;
-    private String exerciseId;
     private int sets;
     private int reps;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
-
+    @ManyToOne
+    @JoinColumn(name = "exercise", nullable = false)
+    private Exercise exercise;
 }
