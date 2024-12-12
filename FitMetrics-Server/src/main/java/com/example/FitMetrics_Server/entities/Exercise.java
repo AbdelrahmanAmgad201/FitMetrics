@@ -16,7 +16,7 @@ public class Exercise {
     private int day;
 
     private String exerciseName;
-    private String exerciseId;
+    private String exerciseId; // This is from the external API
 
 
 }

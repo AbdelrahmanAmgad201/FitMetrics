@@ -2,8 +2,6 @@ package com.example.FitMetrics_Server.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 public class WorkoutPlan {
 
@@ -21,8 +19,4 @@ public class WorkoutPlan {
     @JoinColumn(name = "created_by", referencedColumnName = "user_id", nullable = false)
     private User createdBy;
 
-    @OneToMany(mappedBy = "workoutPlan", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Exercise> exercises;
-
-    // Getters and Setters
 }
