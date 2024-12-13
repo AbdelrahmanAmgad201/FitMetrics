@@ -1,0 +1,52 @@
+package com.example.FitMetrics_Server.controllers;
+
+import com.example.FitMetrics_Server.services.AuthService;
+import com.example.FitMetrics_Server.services.CalenderService;
+import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/calender")
+public class CalenderController {
+
+    @Autowired
+    private CalenderService calenderService;
+    @Autowired
+    private AuthService authService;
+
+
+
+
+    @GetMapping("/work-days")
+    public ResponseEntity<?> getWorkDays(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long userId = Long.parseLong(claims.getId());
+            int year = (int) userdata.get("year");
+            int month = (int) userdata.get("month");
+            return ResponseEntity.ok(calenderService.getWorkDays(userId, year, month));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting work days");
+        }
+    }
+
+    @GetMapping("/all-day-data")
+    public ResponseEntity<?> getAllDayData(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long userId = Long.parseLong(claims.getId());
+            Date date = Date.valueOf((String) userdata.get("date"));
+            return ResponseEntity.ok(calenderService.getAllDayData(userId, date));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting all day data" + e.getMessage());
+        }
+    }
+
+}

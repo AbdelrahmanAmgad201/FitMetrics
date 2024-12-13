@@ -1,0 +1,65 @@
+.analytics-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1b262c;
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .chart-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .circular-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg); /* Start arcs from the top */
+  }
+  
+  .chart-segment {
+    transition: stroke-dasharray 0.3s ease;
+  }
+  
+  .legend {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 12px;
+  }
+  
+  .legend p {
+    margin: 5px 0;
+  }
+  
+  .data-display {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  .data-display p {
+    margin: 5px 0;
+  }
+  
+  
+  /* .analytic {
+    grid-area: analytic;
+    width: 100%; 
+    height: 300px; 
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    background-color: #1B262C; 
+  } */
+  

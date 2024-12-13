@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
 import MyCalendar from './scheduleManager/calendar.jsx'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import Dashboard from './DashPage/Dashboard.jsx';
 import analytics_img from "./assets/analytics.png"
 import calender_img from "./assets/calender.png"
 import dashboard_img from "./assets/dashboard.png"
@@ -14,6 +14,8 @@ import workout_plan_img from "./assets/workout_plan.png"
 import streak_fire_img from "./assets/streak_fire.png"
 import notification_bell_img from "./assets/notification_bell.png"
 import logout_img from "./assets/logout_img.png"
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
@@ -110,6 +112,7 @@ function App() {
           {/* apps here */}
           {showCalender && <MyCalendar />}
           {showWorkoutPlan && <WorkoutPlan />}
+          {showDashboard && <Dashboard />}
         </div>
       </div>
     </div>
