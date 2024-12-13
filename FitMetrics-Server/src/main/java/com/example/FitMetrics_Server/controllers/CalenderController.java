@@ -45,7 +45,7 @@ public class CalenderController {
             Date date = Date.valueOf((String) userdata.get("date"));
             return ResponseEntity.ok(calenderService.getAllDayData(userId, date));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error getting all day data");
+            return ResponseEntity.badRequest().body("Error getting all day data" + e.getMessage());
         }
     }
 

@@ -20,4 +20,23 @@ public class FoodData {
     public FoodData() {
     }
 
+    public long getFoodId() {
+        return foodId;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public double getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public double getEnergy() {
+        return energy;
+    }
 }

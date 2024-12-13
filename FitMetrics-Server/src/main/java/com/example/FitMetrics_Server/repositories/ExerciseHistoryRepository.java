@@ -1,6 +1,5 @@
 package com.example.FitMetrics_Server.repositories;
 
-import com.example.FitMetrics_Server.entities.Exercise;
 import com.example.FitMetrics_Server.entities.UserExerciseHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +24,5 @@ public interface ExerciseHistoryRepository extends JpaRepository<UserExerciseHis
             "FROM UserExerciseHistory u " +
             "WHERE u.user.id = :userId " +
             "AND u.date = :date")
-    List<Exercise> findAllByUserAndDate(Long userId, Date date);
+    List<UserExerciseHistory> findAllByUserAndDate(Long userId, Date date);
 }
