@@ -7,6 +7,34 @@ function Registration(props) {
     const passwordInputRef = useRef(null)
     const confirmPasswordInputRef = useRef(null)
 
+    const submit = async () => {
+        const url = 'http://localhost:8080/user/register'
+        const data = {
+            username: usernameInputRef.current.value,
+            password: passwordInputRef.current.value
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            // Handle the response
+            if (response.ok) {
+                const result = await response.json();
+                props.userJWT.current = result.jwt
+                return true
+            } else {
+                console.error('already used username');
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+        }
+    }
+
     return (
         <div className='login-body'>
             <div className='quote-two'>Fitmetrics</div>
@@ -37,7 +65,8 @@ function Registration(props) {
                     }}>Sign in</button>
                 </div>
                 <div className='submit-btn'>
-                    <button onClick={() => {
+                    <button onClick={async () => {
+                        await submit()
                         props.userSignupDataPage()
                     }}>Create account</button>
                 </div>

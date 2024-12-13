@@ -11,6 +11,8 @@ function Control() {
     const [showAppPage, setShowAppPage] = useState(false)
     const [showUserSignupData, setShowUserSignupData] = useState(false)
 
+    const userJWT = useRef(null)
+
     const closeAllPages = () => {
         setShowAppPage(false)
         setShowLoginPage(false)
@@ -40,10 +42,10 @@ function Control() {
 
     return (
         <div className='control-body'>
-            {showLoginPage && <Login registrationPage={goToRegistrationPage} appPage={goToApp}/>}
-            {showRegistrationPage && <Registration loginPage={goToLoginPage} userSignupDataPage={goToUserSignupData}/>}
-            {showAppPage && <App />}
-            {showUserSignupData && <UserSignupData appPage={goToApp}/>}
+            {showLoginPage && <Login registrationPage={goToRegistrationPage} appPage={goToApp} userJWT={userJWT} />}
+            {showRegistrationPage && <Registration loginPage={goToLoginPage} userSignupDataPage={goToUserSignupData} userJWT={userJWT} />}
+            {showAppPage && <App userJWT={userJWT} />}
+            {showUserSignupData && <UserSignupData appPage={goToApp} userJWT={userJWT}/>}
         </div>
     )
 }

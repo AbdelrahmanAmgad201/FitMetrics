@@ -17,7 +17,7 @@ import logout_img from "./assets/logout_img.png"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+function App(props) {
 
   const [showDashboard, setShowDashboard] = useState(true)
   const [showWorkoutPlan, setShowWorkoutPlan] = useState(false)
@@ -36,6 +36,13 @@ function App() {
     setShowExploreMeals(false)
     setShowExploreWorkouts(false)
   }
+
+  useEffect(() => {
+    console.log(props.userJWT)
+    return () => {
+
+    }
+  }, [])
 
   return (
     <div className="main-app">
@@ -110,9 +117,9 @@ function App() {
         </div>
         <div className="application">
           {/* apps here */}
-          {showCalender && <MyCalendar />}
-          {showWorkoutPlan && <WorkoutPlan />}
-          {showDashboard && <Dashboard />}
+          {showCalender && <MyCalendar userJWT={props.userJWT} />}
+          {showWorkoutPlan && <WorkoutPlan userJWT={props.userJWT} />}
+          {showDashboard && <Dashboard userJWT={props.userJWT} />}
         </div>
       </div>
     </div>
