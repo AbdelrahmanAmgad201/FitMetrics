@@ -16,8 +16,6 @@ html, body {
   overflow: hidden;  /* Prevent scrolling */
 }
 
-
-
 /* Main App Container */
 .main-app {
   display: flex;
@@ -37,6 +35,35 @@ html, body {
   padding: 0 20px;
 }
 
+.top-bar .side-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.top-bar .side-buttons button {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.top-bar .side-buttons button:hover {
+  background-color: #2C5364;
+}
+
+.top-bar .side-buttons img {
+  width: 25px;
+  height: 25px;
+}
+
+.top-bar .user-identity {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Main Body */
 .main-body {
   display: flex;
@@ -48,7 +75,7 @@ html, body {
 
 /* Navigation Menu */
 .navigation-menu {
-  width: 12%;
+  width: 15%;
   height: 100%;
   background-color: #1B262C;
   display: flex;
@@ -82,4 +109,18 @@ html, body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.navigation-menu .field {
+  display: flex;
+  gap: 10px;
+}
+
+.navigation-menu .field div {
+
+}
+
+.navigation-menu .field img {
+  height: 20px;
+  width: 20px;
 }

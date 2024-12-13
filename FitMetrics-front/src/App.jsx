@@ -1,11 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
 import MyCalendar from './scheduleManager/calendar.jsx'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import analytics_img from "./assets/analytics.png"
+import calender_img from "./assets/calender.png"
+import dashboard_img from "./assets/dashboard.png"
+import explore_meals_img from "./assets/explore_meals.png"
+import explore_workouts_img from "./assets/explore_workouts.png"
+import nutrition_plan_img from "./assets/nutrition_plan.png"
+import workout_plan_img from "./assets/workout_plan.png"
 
+import streak_fire_img from "./assets/streak_fire.png"
+import notification_bell_img from "./assets/notification_bell.png"
+import logout_img from "./assets/logout_img.png"
 
 function App() {
+
+  const [showDashboard, setShowDashboard] = useState(true)
+  const [showWorkoutPlan, setShowWorkoutPlan] = useState(false)
+  const [showCalender, setShowCalender] = useState(false)
+  const [showAnalytics, setShowAnalytics] = useState(false)
+  const [showNutritionPlan, setShowNutritionPlan] = useState(false)
+  const [showExploreMeals, setShowExploreMeals] = useState(false)
+  const [showExploreWorkouts, setShowExploreWorkouts] = useState(false)
+
+  const closeAllApps = () => {
+    setShowDashboard(false)
+    setShowWorkoutPlan(false)
+    setShowCalender(false)
+    setShowAnalytics(false)
+    setShowNutritionPlan(false)
+    setShowExploreMeals(false)
+    setShowExploreWorkouts(false)
+  }
 
   return (
     <div className="main-app">
@@ -15,23 +43,73 @@ function App() {
           <div>mahmoud</div>
         </div>
         <div className="side-buttons">
-          test
+          <button>
+            <img src={streak_fire_img}/>
+          </button>
+          <button>
+            <img src={notification_bell_img}/>
+          </button>
+          <button>
+            <img src={logout_img}/>
+          </button>
         </div>
       </div>
       <div className="main-body">
         <div className="navigation-menu">
-          <button><img /><div>hello1</div></button>
-          <button><img /><div>hello2</div></button>
-          <button><img /><div>hello3</div></button>
-          <button><img /><div>hello4</div></button>
-          <button><img /><div>hello5</div></button>
-          <button><img /><div>hello6</div></button>
-          <button><img /><div>hello7</div></button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowDashboard(true)
+          }}>
+            <img src={dashboard_img}/>
+            <div>Dashboard</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowAnalytics(true)
+          }}>
+            <img src={analytics_img}/>
+            <div>Analytics</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowWorkoutPlan(true)
+          }}>
+            <img src={workout_plan_img}/>
+            <div>Workout plan</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowNutritionPlan(true)
+          }}>
+            <img src={nutrition_plan_img}/>
+            <div>Nutrition plan</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowExploreMeals(true)
+          }}>
+            <img src={explore_meals_img}/>
+            <div>Explore meals</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowExploreWorkouts(true)
+          }}>
+            <img src={explore_workouts_img}/>
+            <div>Explore workouts</div>
+          </button>
+          <button className="field" onClick={() =>{
+            closeAllApps()
+            setShowCalender(true)
+          }}>
+            <img src={calender_img}/>
+            <div>Calender</div>
+          </button>
         </div>
         <div className="application">
           {/* apps here */}
-          {/* <WorkoutPlan /> */}
-
+          {showCalender && <MyCalendar />}
+          {showWorkoutPlan && <WorkoutPlan />}
         </div>
       </div>
     </div>

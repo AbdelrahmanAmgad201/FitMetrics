@@ -1,0 +1,103 @@
+.login-body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+.login-body .img-part {
+    height: 100vh;
+    width: 70vw;
+}
+
+.login-body .img-part img {
+    height: 130vh;
+    width: 70vw;
+}
+
+.login-body .form {
+    background-color: #1B262C;
+    width: 30vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 70px;
+}
+
+.input-part {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.form .title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.login-body .input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-body .input-field input {
+    background-color: #D9D9D9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form .other-page {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 10px;
+    font-size: 14px;
+}
+
+.form .other-page p{
+    padding-right: 5px;
+}
+
+.form .other-page button {
+    cursor: pointer;
+}
+
+.form .other-page button:hover {
+    text-decoration: underline;
+}
+
+.form .submit-btn button {
+    padding: 15px 30px;
+    color: black;
+    background-color: #D9D9D9;
+    font-size: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.form .submit-btn button:hover {
+    outline: 2px solid #417283;
+}
+
+.form .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-one {
+    position: absolute;
+    top: 90%;
+    left: 4%;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.quote-two {
+    position: absolute;
+    left: 72%;
+    top: 5%;
+    font-weight: bold;
+}

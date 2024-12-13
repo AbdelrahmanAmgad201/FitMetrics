@@ -3,10 +3,8 @@ import './Card.css'
 function Card(props) {
 
   return (
-    <div className="card">
-        <div>
-            {props.day}
-        </div>
+    <div className="workout-card">
+        <div className='title'><p>{props.day}</p></div>
     </div>
   )
 }

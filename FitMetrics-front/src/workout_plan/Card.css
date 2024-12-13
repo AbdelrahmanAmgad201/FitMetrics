@@ -1,6 +1,20 @@
-.card {
+.workout-card {
     padding: 20px;
     background-color: #0F4C75;
-    width: 100px;
-    height: 200px;
+    width: min(250px);
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-card .title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workout-card .title p {
+    font-size: 24px;
+    font-weight: 500;
 }
