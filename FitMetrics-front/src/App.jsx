@@ -30,8 +30,8 @@ function App() {
         <div className="application">
           {/* apps here */}
           {/* <WorkoutPlan /> */}
-          { <Dashboard /> }
-          {/*<MyCalendar></MyCalendar>*/}
+          {/* { <Dashboard /> } */}
+          {<MyCalendar></MyCalendar>}
 
         </div>
       </div>
