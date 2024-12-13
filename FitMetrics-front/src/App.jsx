@@ -3,8 +3,7 @@ import './App.css'
 import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
 import MyCalendar from './scheduleManager/calendar.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import Dashboard from './DashPage/Dashboard.jsx';
 function App() {
 
   return (
@@ -31,7 +30,8 @@ function App() {
         <div className="application">
           {/* apps here */}
           {/* <WorkoutPlan /> */}
-          {<MyCalendar></MyCalendar>}
+          { <Dashboard /> }
+          {/*<MyCalendar></MyCalendar>*/}
 
         </div>
       </div>
