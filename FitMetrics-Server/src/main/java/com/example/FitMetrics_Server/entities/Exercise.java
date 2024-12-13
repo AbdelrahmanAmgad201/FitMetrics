@@ -18,5 +18,8 @@ public class Exercise {
     private String exerciseName;
     private String exerciseId; // This is from the external API
 
+    public Exercise() {
+    }
+
 
 }

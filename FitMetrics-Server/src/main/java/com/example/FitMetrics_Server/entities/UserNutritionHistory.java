@@ -20,4 +20,7 @@ public class UserNutritionHistory {
     @ManyToOne
     @JoinColumn(name = "food_id", nullable = false)
     private FoodData foodData;
+
+    UserNutritionHistory() {
+    }
 }

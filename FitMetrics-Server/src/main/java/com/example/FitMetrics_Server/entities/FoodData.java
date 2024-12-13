@@ -17,4 +17,7 @@ public class FoodData {
     private double protein;
     private double fats;
 
+    public FoodData() {
+    }
+
 }

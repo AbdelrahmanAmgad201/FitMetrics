@@ -25,4 +25,7 @@ public class UserExerciseHistory {
     @ManyToOne
     @JoinColumn(name = "exercise", nullable = false)
     private Exercise exercise;
+
+    public UserExerciseHistory() {
+    }
 }
