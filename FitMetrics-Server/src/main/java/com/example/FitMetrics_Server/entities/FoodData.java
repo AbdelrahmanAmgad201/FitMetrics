@@ -13,9 +13,9 @@ public class FoodData {
     @Column(name = "food_name")
     private String foodName;
 
-    private double calories;
+    private double carbohydrates;
     private double protein;
-    private double fats;
+    private double energy;
 
     public FoodData() {
     }

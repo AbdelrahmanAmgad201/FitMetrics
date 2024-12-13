@@ -18,7 +18,8 @@ public class USDAController {
     // Endpoint for searching foods
     @GetMapping("/search")
     public String searchFoods(@RequestParam String query) {
-        return usdaService.searchFoods(query);
+//        return usdaService.searchFoods(query);
+        return null;
     }
     // For testing GET http://localhost:8080/food/171119?format=abridged&nutrients=203
     // Endpoint for fetching food details by FDC ID
