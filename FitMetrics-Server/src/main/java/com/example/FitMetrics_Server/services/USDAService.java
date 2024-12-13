@@ -88,10 +88,9 @@ public class USDAService {
     }
 
     // Method to fetch food details by FDC ID
-    public String getFoodDetailsByFdcId(Long fdcId, String format, Integer nutrients) {
+    public String getFoodDetailsByFdcId(Long fdcId, String format) {
         String url = UriComponentsBuilder.fromHttpUrl(foodApiUrl + "/" + fdcId)
                 .queryParam("format", format)
-                .queryParam("nutrients", nutrients)
                 .queryParam("api_key", apiKey)
                 .toUriString();
 
