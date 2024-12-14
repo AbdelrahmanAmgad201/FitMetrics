@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTrashAlt } from "react-icons/fa";
 import "./AddMeal.css";
 
-function AddMeal() {
+function AddMeal(props) {
   const [searchQuery, setSearchQuery] = useState(""); 
   const [mealOptions, setMealOptions] = useState([]); 
   const [selectedMeals, setSelectedMeals] = useState([]); 
@@ -11,9 +11,15 @@ function AddMeal() {
   const dropdownRef = useRef(null); 
   const searchInputRef = useRef(null); 
 
+  useEffect(() => {
+    props.render()
+    props.meals.current = selectedMeals
+  }, [selectedMeals]);
+
   const fetchMeals = async (query) => {
 
     const url = 'http://localhost:8080/search?query=' + query
+    let data
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -25,16 +31,19 @@ function AddMeal() {
         // Handle the response
         if (response.ok) {
             const result = await response.json();
+            data = result
             console.log(result)
         }
     } catch (error) {
         console.error('Network error:', error);
     }
-    const data = ["chicken"]
-    const filteredData = data.filter((meal) =>
-      meal.toLowerCase().includes(query.toLowerCase())
-    );
-    setMealOptions(filteredData); 
+    const updatedData = data.map((item) => ({
+      ...item,
+      protein: { value: item.protein.value },
+      carbohydrates: { value: item.carbohydrates.value },
+      energy: { value: item.energy.value },
+    }));
+    setMealOptions(updatedData); 
   };
 
   const handleSearchChange = (event) => {
@@ -52,18 +61,50 @@ function AddMeal() {
     }
   };
 
-  const filteredMeals = mealOptions.filter(
-    (meal) => !selectedMeals.includes(meal)
-  );
+  const addMealToSelection = async (meal) => {
+    setSelectedMeals([...selectedMeals, meal]);
+    const url = 'http://localhost:8080/api/nutrition/add-food'
+    try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${props.userJWT.current}`
+          },
+          body: JSON.stringify(meal)
+      });
 
-  const addMealToSelection = (meal) => {
-    if (!selectedMeals.includes(meal)) {
-      setSelectedMeals([...selectedMeals, meal]); 
+      // Handle the response
+      if (response.ok) {
+          const result = await response.json();
+          console.log(result)
+      }
+    } catch (error) {
+        console.error('Network error:', error);
     }
   };
 
-  const removeMealFromSelection = (meal) => {
-    setSelectedMeals(selectedMeals.filter((m) => m !== meal)); 
+  const removeMealFromSelection = async (meal) => {
+    const index = selectedMeals.findIndex((m) => m === meal);
+    setSelectedMeals([...selectedMeals.slice(0, index), ...selectedMeals.slice(index + 1)])
+    const url = 'http://localhost:8080/api/nutrition/delete-food?foodId=' + meal.fdcId
+    try {
+      const response = await fetch(url, {
+          method: 'DEL',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${props.userJWT.current}`
+          }
+      });
+
+      // Handle the response
+      if (response.ok) {
+          const result = await response.json();
+          console.log(result)
+      }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
   };
 
   const handleClickOutside = (event) => {
@@ -74,7 +115,47 @@ function AddMeal() {
       setIsDropdownOpen(false);
     }
   };
+
+  const getSelectedElements = async() => {
+
+    const getTodayDate = () => {
+      const today = new Date();
+  
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1; // Months are zero-based
+      const day = today.getDate();
+  
+      // Format: YYYY-MM-D
+      return {date:`${year}-${month}-${day}`};
+    };
+
+    
+    const data = JSON.stringify(getTodayDate())
+    console.log(data)
+    const url = 'http://localhost:8080/calender/all-day-data'
+    try {
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${props.userJWT.current}`
+          },
+          body: data
+      });
+
+      // Handle the response
+      if (response.ok) {
+          const result = await response.json();
+          console.log(result[1])
+          setSelectedMeals(result[1])
+      }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+  }
+
   useEffect(() => {
+    getSelectedElements()
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -97,15 +178,15 @@ function AddMeal() {
         </div>
       </div>
       <div className="other-than-search">
-        {isDropdownOpen && searchQuery.trim() && filteredMeals.length > 0 && (
+        {isDropdownOpen && searchQuery.trim() && mealOptions.length > 0 && (
           <div className="dropdown" ref={dropdownRef}>
-            {filteredMeals.map((meal, index) => (
+            {mealOptions.map((meal, index) => (
               <div
                 key={index}
                 className="dropdownItem"
-                onClick={() => addMealToSelection(meal)}
+                onClick={async () => await addMealToSelection(meal)}
               >
-                {meal}
+                {meal.foodName}
               </div>
             ))}
           </div>
@@ -117,10 +198,10 @@ function AddMeal() {
             <div className="mealList">
               {selectedMeals.map((meal, index) => (
                 <div key={index} className="mealItem">
-                  <span className="mealName">{meal}</span>
+                  <span className="mealName">{meal.foodName}</span>
                   <FaTrashAlt
                     className="removeIcon"
-                    onClick={() => removeMealFromSelection(meal)}
+                    onClick={async() => await removeMealFromSelection(meal)}
                   />
                 </div>
               ))}
