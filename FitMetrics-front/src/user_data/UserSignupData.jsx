@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react'
 import "./UserSignupData.css"
 import profile_img from "./assets/profile.png"
 
-function UserSignupData({userJWT}) {
+function UserSignupData(props) {
     const firstNameInputRef = useRef(null)
     const lastNameInputRef = useRef(null)
     const weightInputRef = useRef(null)
@@ -24,35 +24,32 @@ function UserSignupData({userJWT}) {
 
     const submit = async () => {
         const url = 'http://localhost:8080/user/post-data'
+        let w = parseFloat(weightInputRef.current.value) + 0.001
+        let h = parseFloat(heightInputRef.current.value) + 0.001
         const data = {
             firstName: firstNameInputRef.current.value,
             lastName: lastNameInputRef.current.value,
             isKg: true,
-            weight: weightInputRef.current.value,
-            height: heightInputRef.current.value,
+            weight: w,
+            height: h,
             dateOfBirth: dateInputRef.current.value
         };
 
         if (unitInputRef.current == "Pound/Inch")
             data.isKg = false
-        
-        console.log(data)
-        console.log(userJWT.current)
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userJWT.current}`
+                    'Authorization': `Bearer ${props.userJWT.current}`
                 },
                 body: JSON.stringify(data)
             });
     
             // Handle the response
             if (response.ok) {
-                const result = await response.json();
-                props.userJWT.current = result.jwt
                 return true
             } else {
                 setErrorMsg("already used username")

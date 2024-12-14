@@ -1,57 +1,56 @@
 .workoutList {
-    grid-area: workoutList;
-    width: 100%;
-    height: 600px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
-    align-items: flex-start;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    background-color: #1B262C;
-    padding: 20px; 
-  }
-  
-  .title {
-    color: #ffffff; 
-    font-size: 32px; 
-    margin-bottom: 20px; 
-    text-align: center;
-    width: 100%; 
-  }
-  
-  .workoutItems {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    gap: 10px; /* Space between workout items */
-  }
-  
-  .workoutItem {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .workoutItem input {
-    margin-right: 10px;
-  }
-  
-  .workoutItem label {
-    font-size: 18px;
-  }
-  
-  .congratulations-message {
-    margin-top: 20px;
-    font-size: 18px;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    width: 100%; 
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-  }
-  
+  grid-area: workoutList;
+  width: 100%;
+  height: 620px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: flex-start;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  background-color: #1B262C;
+  padding: 20px; 
+}
+
+.title {
+  color: #ffffff; 
+  font-size: 32px; 
+  margin-bottom: 20px; 
+  text-align: center;
+  width: 100%; 
+}
+
+.workoutItems {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 10px; /* Space between workout items */
+}
+
+.workoutItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.workoutItem input {
+  margin-right: 10px;
+}
+
+.workoutItem label {
+  font-size: 18px;
+}
+
+.congratulations-message {
+  margin-top: 20px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 100%; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+}

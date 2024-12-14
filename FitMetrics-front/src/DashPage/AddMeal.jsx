@@ -12,15 +12,25 @@ function AddMeal() {
   const searchInputRef = useRef(null); 
 
   const fetchMeals = async (query) => {
-    const data = [
-      "Spaghetti Bolognese",
-      "Chicken Salad",
-      "Grilled Chicken",
-      "Chicken Wings",
-      "Vegetarian Pizza",
-      "Chicken Tacos",
-      "Chicken Burger",
-    ];
+
+    const url = 'http://localhost:8080/search?query=' + query
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Handle the response
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result)
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+    const data = ["chicken"]
     const filteredData = data.filter((meal) =>
       meal.toLowerCase().includes(query.toLowerCase())
     );
@@ -86,38 +96,39 @@ function AddMeal() {
           <FaSearch className="searchIcon" onClick={onSearch} />
         </div>
       </div>
-
-      {isDropdownOpen && searchQuery.trim() && filteredMeals.length > 0 && (
-        <div className="dropdown" ref={dropdownRef}>
-          {filteredMeals.map((meal, index) => (
-            <div
-              key={index}
-              className="dropdownItem"
-              onClick={() => addMealToSelection(meal)}
-            >
-              {meal}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="selectedMeals">
-        <h3>Selected Meals:</h3>
-        {selectedMeals.length > 0 ? (
-          <div className="mealList">
-            {selectedMeals.map((meal, index) => (
-              <div key={index} className="mealItem">
-                <span className="mealName">{meal}</span>
-                <FaTrashAlt
-                  className="removeIcon"
-                  onClick={() => removeMealFromSelection(meal)}
-                />
+      <div className="other-than-search">
+        {isDropdownOpen && searchQuery.trim() && filteredMeals.length > 0 && (
+          <div className="dropdown" ref={dropdownRef}>
+            {filteredMeals.map((meal, index) => (
+              <div
+                key={index}
+                className="dropdownItem"
+                onClick={() => addMealToSelection(meal)}
+              >
+                {meal}
               </div>
             ))}
           </div>
-        ) : (
-          <p>No meals selected yet.</p>
         )}
+
+        <div className="selectedMeals">
+          <h3>Selected Meals:</h3>
+          {selectedMeals.length > 0 ? (
+            <div className="mealList">
+              {selectedMeals.map((meal, index) => (
+                <div key={index} className="mealItem">
+                  <span className="mealName">{meal}</span>
+                  <FaTrashAlt
+                    className="removeIcon"
+                    onClick={() => removeMealFromSelection(meal)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No meals selected yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );

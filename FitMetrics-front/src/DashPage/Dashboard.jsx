@@ -4,12 +4,12 @@ import AddMeal from "./AddMeal";
 import WorkoutList from "./WorkoutList";
 import "./Dashboard.css";
 
-function Dashboard() {
+function Dashboard(props) {
   return (
-    <div className="container">
-      <Analytics />
-      <AddMeal />
-      <WorkoutList />
+    <div className="dashboard-container">
+      <Analytics userJWT={props.userJWT}/>
+      <AddMeal userJWT={props.userJWT}/>
+      <WorkoutList userJWT={props.userJWT}/>
     </div>
   );
 }
