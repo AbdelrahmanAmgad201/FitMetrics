@@ -53,14 +53,9 @@ public class UserNutritionHistoryService {
         foodData.setFoodId(((Number) foodJson.get("fdcId")).longValue());
         foodData.setFoodName((String) foodJson.get("foodName"));
 
-        Map<String, Object> proteinData = (Map<String, Object>) foodJson.get("protein");
-        foodData.setProtein(((Number) proteinData.get("value")).doubleValue());
-
-        Map<String, Object> carbData = (Map<String, Object>) foodJson.get("carbohydrates");
-        foodData.setCarbohydrates(((Number) carbData.get("value")).doubleValue());
-
-        Map<String, Object> energyData = (Map<String, Object>) foodJson.get("energy");
-        foodData.setEnergy(((Number) energyData.get("value")).doubleValue());
+        foodData.setProtein(((Number) foodJson.get("protein")).doubleValue());
+        foodData.setCarbohydrates(((Number) foodJson.get("carbohydrates")).doubleValue());
+        foodData.setEnergy(((Number) foodJson.get("energy")).doubleValue());
 
         return foodData;
     }
