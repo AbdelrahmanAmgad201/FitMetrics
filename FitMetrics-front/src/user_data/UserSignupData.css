@@ -17,6 +17,15 @@
     padding: 20px;
 }
 
+.UserSignupData-body .main-body input {
+    color: black;
+}
+
+.UserSignupData-body .main-body .error-msg {
+    padding: 10px;
+    background-color: #e91429;
+}
+
 .UserSignupData-body .user-img {
     display: flex;
     align-items: center;

@@ -7,6 +7,9 @@ function Registration(props) {
     const passwordInputRef = useRef(null)
     const confirmPasswordInputRef = useRef(null)
 
+    const [errorMsg, setErrorMsg] = useState("")
+    const [showErrorMsg, setShowErrorMsg] = useState(false)
+
     const submit = async () => {
         const url = 'http://localhost:8080/user/register'
         const data = {
@@ -28,11 +31,36 @@ function Registration(props) {
                 props.userJWT.current = result.jwt
                 return true
             } else {
-                console.error('already used username');
+                setErrorMsg("already used username")
             }
         } catch (error) {
             console.error('Network error:', error);
         }
+        return false
+    }
+
+    const clearInput = () => {
+        usernameInputRef.current.value = ""
+        passwordInputRef.current.value = ""
+        confirmPasswordInputRef.current.value = ""
+    }
+
+    const validate = () => {
+        const hasSpecialCharacters = (str) => /[^a-zA-Z0-9_]/.test(str)
+        let flag = true
+        if (hasSpecialCharacters(usernameInputRef.current.value))
+            setErrorMsg("username should consist of letters, numbers and underscore only")
+        else if (confirmPasswordInputRef.current.value != confirmPasswordInputRef.current.value)
+            setErrorMsg("passwords doesn't match")
+        else if (passwordInputRef.current.value.length < 8)
+            setErrorMsg("password must be at least 8 characters long")
+        else flag = false
+        if (flag){
+            setShowErrorMsg(true)
+            clearInput()
+            return false
+        }
+        return true
     }
 
     return (
@@ -43,7 +71,8 @@ function Registration(props) {
                 <img src={login_img}/>
             </div>
             <div className='form'>
-                <div className='title'>Sign up</div>
+                {showErrorMsg && <div className='error-msg'>{errorMsg}</div>}
+                <div className='title-login'>Sign up</div>
                 <div className='input-part'>
                     <div className='input-field'>
                         <div>Username</div>
@@ -66,8 +95,9 @@ function Registration(props) {
                 </div>
                 <div className='submit-btn'>
                     <button onClick={async () => {
-                        await submit()
-                        props.userSignupDataPage()
+                        if (validate() && await submit()){
+                            props.userSignupDataPage()
+                        }
                     }}>Create account</button>
                 </div>
             </div>

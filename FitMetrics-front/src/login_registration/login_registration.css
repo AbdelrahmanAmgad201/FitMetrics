@@ -25,13 +25,18 @@
     padding: 70px;
 }
 
+.login-body .form .error-msg {
+    background-color: #e91429;
+    padding: 10px;
+}
+
 .input-part {
     display: flex;
     flex-direction: column;
     gap: 10px
 }
 
-.form .title {
+.form .title-login {
     font-size: 32px;
     font-weight: bold;
 }
@@ -46,6 +51,7 @@
     background-color: #D9D9D9;
     padding: 10px;
     border-radius: 5px;
+    color: black;
 }
 
 .form .other-page {
@@ -58,6 +64,7 @@
 
 .form .other-page p{
     padding-right: 5px;
+    margin-bottom: 0px !important;
 }
 
 .form .other-page button {

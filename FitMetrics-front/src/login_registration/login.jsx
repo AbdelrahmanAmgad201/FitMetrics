@@ -5,6 +5,7 @@ import "./login_registration.css"
 function Login(props) {
     const usernameInputRef = useRef(null)
     const passwordInputRef = useRef(null)
+    const [showErrorMsg, setShowErrorMsg] = useState(false)
 
     const submit = async () => {
         const url = 'http://localhost:8080/user/login'
@@ -27,11 +28,12 @@ function Login(props) {
                 props.userJWT.current = result.jwt
                 return true
             } else {
-                console.error('wrong username or password');
+                setShowErrorMsg(true)
             }
         } catch (error) {
             console.error('Network error:', error);
         }
+        return false
     }
 
     return (
@@ -42,7 +44,8 @@ function Login(props) {
                 <img src={login_img}/>
             </div>
             <div className='form'>
-                <div className='title'>Sign in</div>
+                {showErrorMsg && <div className='error-msg'>Wrong username or password</div>}
+                <div className='title-login'>Sign in</div>
                 <div className='input-part'>
                     <div className='input-field'>
                         <div>Username</div>
@@ -60,8 +63,9 @@ function Login(props) {
                 </div>
                 <div className='submit-btn'>
                     <button onClick={async () => {
-                        await submit()
-                        props.appPage()
+                        if (await submit()){
+                            props.appPage()
+                        }
                     }}>Sign in</button>
                 </div>
             </div>

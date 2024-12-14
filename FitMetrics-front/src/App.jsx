@@ -38,7 +38,7 @@ function App(props) {
   }
 
   useEffect(() => {
-    console.log(props.userJWT)
+    console.log(props.userJWT.current)
     return () => {
 
     }
