@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/calender")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CalenderController {
 
     @Autowired
@@ -19,10 +20,8 @@ public class CalenderController {
     @Autowired
     private AuthService authService;
 
-
-
-
-    @GetMapping("/work-days")
+    // Changed to POST instead of GET to accept request body
+    @PostMapping("/work-days")
     public ResponseEntity<?> getWorkDays(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
         try {
             token = token.replace("Bearer ", "");
@@ -32,11 +31,12 @@ public class CalenderController {
             int month = (int) userdata.get("month");
             return ResponseEntity.ok(calenderService.getWorkDays(userId, year, month));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error getting work days");
+            return ResponseEntity.badRequest().body("Error getting work days: " + e.getMessage());
         }
     }
 
-    @GetMapping("/all-day-data")
+    // Changed to POST instead of GET to accept request body
+    @PostMapping("/all-day-data")
     public ResponseEntity<?> getAllDayData(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
         try {
             token = token.replace("Bearer ", "");
@@ -45,8 +45,7 @@ public class CalenderController {
             Date date = Date.valueOf((String) userdata.get("date"));
             return ResponseEntity.ok(calenderService.getAllDayData(userId, date));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error getting all day data" + e.getMessage());
+            return ResponseEntity.badRequest().body("Error getting all day data: " + e.getMessage());
         }
     }
-
 }
