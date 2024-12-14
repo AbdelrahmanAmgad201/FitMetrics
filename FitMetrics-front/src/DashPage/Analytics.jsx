@@ -36,7 +36,6 @@ function Analytics(props) {
       protein: { value: 0, max: 100 },
     };
 
-    // Calculate updated values
     props.meals.current.forEach((item) => {
       analyticsData2.carbohydrates.value += item.carbohydrates;
       analyticsData2.calories.value += item.energy;
@@ -77,7 +76,7 @@ function Analytics(props) {
           {segments.map((segment, index) => {
             const circumference = 2 * Math.PI * segment.radius; // Calculate circumference
             const dashArray = `${(segment.percentage / 100) * circumference} ${circumference}`;
-            const dashOffset = circumference * (1 - segment.percentage / 100); // Adjust offset for shrinking
+            const dashOffset = 0; // Adjust offset for shrinking
 
             return (
               <circle
@@ -106,15 +105,15 @@ function Analytics(props) {
       </div>
       <div className="data-display">
         <p>
-          <strong>Carbohydrates:</strong> {analyticsData.current.carbohydrates.value} /{" "}
+          <strong>Carbohydrates:</strong> {analyticsData.current.carbohydrates.value.toFixed(0)} /{" "}
           300 gm
         </p>
         <p>
-          <strong>Calories:</strong> {analyticsData.current.calories.value} /{" "}
+          <strong>Calories:</strong> {analyticsData.current.calories.value.toFixed(0)} /{" "}
           2500 cal
         </p>
         <p>
-          <strong>Protein:</strong> {analyticsData.current.protein.value} /{" "}
+          <strong>Protein:</strong> {analyticsData.current.protein.value.toFixed(0)} /{" "}
           100 gm
         </p>
       </div>

@@ -32,17 +32,17 @@ function AddMeal(props) {
         if (response.ok) {
             const result = await response.json();
             data = result
-            console.log(result)
         }
     } catch (error) {
         console.error('Network error:', error);
     }
     const updatedData = data.map((item) => ({
       ...item,
-      protein: { value: item.protein.value },
-      carbohydrates: { value: item.carbohydrates.value },
-      energy: { value: item.energy.value },
+      protein: item.protein.value,
+      carbohydrates: item.carbohydrates.value,
+      energy: item.energy.value,
     }));
+    console.log(updatedData)
     setMealOptions(updatedData); 
   };
 
@@ -90,7 +90,7 @@ function AddMeal(props) {
     const url = 'http://localhost:8080/api/nutrition/delete-food?foodId=' + meal.fdcId
     try {
       const response = await fetch(url, {
-          method: 'DEL',
+          method: 'DELETE',
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${props.userJWT.current}`
@@ -99,8 +99,7 @@ function AddMeal(props) {
 
       // Handle the response
       if (response.ok) {
-          const result = await response.json();
-          console.log(result)
+        console.log(response)
       }
     } catch (error) {
         console.error('Network error:', error);
