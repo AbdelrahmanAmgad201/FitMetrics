@@ -2,10 +2,7 @@ package com.example.FitMetrics_Server.controllers;
 
 import com.example.FitMetrics_Server.services.FoodSimpleDto;
 import com.example.FitMetrics_Server.services.USDAService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,4 +28,5 @@ public class USDAController {
             @RequestParam(required = false, defaultValue = "abridged") String format){
         return usdaService.getFoodDetailsByFdcId(fdcId, format);
     }
+
 }

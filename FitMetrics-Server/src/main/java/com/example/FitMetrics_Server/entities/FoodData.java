@@ -39,4 +39,24 @@ public class FoodData {
     public double getEnergy() {
         return energy;
     }
+
+    public void setFoodId(long foodId) {
+        this.foodId = foodId;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public void setCarbohydrates(double carbohydrates) {
+        this.carbohydrates = carbohydrates;
+    }
+
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
+    public void setEnergy(double energy) {
+        this.energy = energy;
+    }
 }
