@@ -2,7 +2,7 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function CalendarCard({ title, exercise, nutrition, closeCard }) {
+function CalendarCard({ title, exercise, nutrition }) {
   return (
     <Card style={{ width: '18rem', backgroundColor: "rgba(33, 58, 69, 0.8)", color: 'white' }}>
       <Card.Body>
@@ -50,10 +50,6 @@ function CalendarCard({ title, exercise, nutrition, closeCard }) {
           )}
         </div>
       </Card.Body>
-
-      <Button className="card_button" variant="primary" onClick={closeCard}>
-        Light Weeeight Baaaby!!!
-      </Button>
     </Card>
   );
 }
