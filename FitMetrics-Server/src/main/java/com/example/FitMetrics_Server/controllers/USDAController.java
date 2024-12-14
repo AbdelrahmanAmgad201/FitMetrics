@@ -29,4 +29,5 @@ public class USDAController {
             @RequestParam(required = false, defaultValue = "abridged") String format){
         return usdaService.getFoodDetailsByFdcId(fdcId, format);
     }
+
 }
