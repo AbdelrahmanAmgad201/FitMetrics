@@ -34,11 +34,4 @@ public interface NutritionHistoryRepository extends JpaRepository<UserNutritionH
     );
 
 
-
-
-
-
-
-
-
 }
