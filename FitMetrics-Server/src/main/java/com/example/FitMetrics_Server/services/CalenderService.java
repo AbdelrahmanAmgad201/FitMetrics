@@ -38,6 +38,7 @@ public class CalenderService {
         List<Map<String, Object>> foodListRes = new ArrayList<>();
         for(FoodData foodData: foodDataList) {
             Map<String, Object> foodMap = new HashMap<>();
+            foodMap.put("fdcId", foodData.getFoodId());
             foodMap.put("foodName", foodData.getFoodName());
             foodMap.put("carbohydrates", foodData.getCarbohydrates());
             foodMap.put("protein", foodData.getProtein());
