@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface NutritionHistoryRepository extends JpaRepository<UserNutritionHistory, Long> {
 
-    @Query("SELECT f FROM UserNutritionHistory nh " +
-            "JOIN nh.foodData f " +
+    @Query("SELECT nh FROM UserNutritionHistory nh " +
+            "JOIN FETCH nh.foodData f " +
             "WHERE nh.user.id = :userId " +
             "AND FUNCTION('DATE', nh.date) = :date")
-    List<FoodData> findAllByUserAndDate(
+    List<UserNutritionHistory> findAllByUserAndDate(
             @Param("userId") Long userId,
             @Param("date") java.sql.Date date
     );
