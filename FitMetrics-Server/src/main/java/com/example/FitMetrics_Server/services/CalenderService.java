@@ -101,4 +101,35 @@ public class CalenderService {
     }
 
 
+    public List<Map<LocalDate, Double>> getDailyTotalCalories(Long userId, LocalDate startDate, LocalDate endDate) {
+        endDate = endDate.plusDays(1);
+        java.sql.Date start = java.sql.Date.valueOf(startDate);
+        java.sql.Date end = java.sql.Date.valueOf(endDate);
+
+        List<Object[]> dailyTotalCalories = nutritionHistoryRepository.findDailyEnergyTotalsByDateRange(userId, start, end);
+
+        return dailyTotalCalories.stream()
+                .map(row -> {
+                    Map<LocalDate, Double> dailyCalories = new HashMap<>();
+                    dailyCalories.put(((java.sql.Date) row[0]).toLocalDate(), (Double) row[1]);
+                    return dailyCalories;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<Map<LocalDate, Double>> getDailyTotalCarbohydrates(Long userId, LocalDate startDate, LocalDate endDate) {
+        endDate = endDate.plusDays(1);
+        java.sql.Date start = java.sql.Date.valueOf(startDate);
+        java.sql.Date end = java.sql.Date.valueOf(endDate);
+
+        List<Object[]> dailyTotalCarbohydrates = nutritionHistoryRepository.findDailyCarbsTotalsByDateRange(userId, start, end);
+
+        return dailyTotalCarbohydrates.stream()
+                .map(row -> {
+                    Map<LocalDate, Double> dailyCarbohydrates = new HashMap<>();
+                    dailyCarbohydrates.put(((java.sql.Date) row[0]).toLocalDate(), (Double) row[1]);
+                    return dailyCarbohydrates;
+                })
+                .collect(Collectors.toList());
+    }
 }
