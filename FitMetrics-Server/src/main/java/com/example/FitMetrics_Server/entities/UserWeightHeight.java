@@ -18,13 +18,15 @@ public class UserWeightHeight {
     private double height;
 
     private LocalDate date;
-        public UserWeightHeight(User user, double weight, double height, LocalDate date) {
-        this.user = user;
-        this.weight = weight;
-        this.height = height;
-        this.date = date;
+    public UserWeightHeight(User user, double weight, double height, LocalDate date) {
+    this.user = user;
+    this.weight = weight;
+    this.height = height;
+    this.date = date;
     }
 
+    public UserWeightHeight() {
+    }
 
     public Long getId() {
         return id;
