@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class user_weight_height {
+public class UserWeightHeight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class user_weight_height {
     private double height;
 
     private LocalDate date;
-        public user_weight_height(User user, double weight, double height, LocalDate date) {
+        public UserWeightHeight(User user, double weight, double height, LocalDate date) {
         this.user = user;
         this.weight = weight;
         this.height = height;
