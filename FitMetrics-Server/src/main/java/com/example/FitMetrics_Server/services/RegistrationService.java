@@ -1,7 +1,7 @@
 package com.example.FitMetrics_Server.services;
 
 import com.example.FitMetrics_Server.entities.User;
-import com.example.FitMetrics_Server.entities.user_weight_height;
+import com.example.FitMetrics_Server.entities.UserWeightHeight;
 import com.example.FitMetrics_Server.repositories.UserRepository;
 import com.example.FitMetrics_Server.repositories.UserWeightHeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class RegistrationService {
             System.out.println("PREFERENCE: " + user.get().getUserPreference());
             userRepository.save(user.get());
 
-            user_weight_height entry = new user_weight_height(user.get(), weight, height, LocalDate.now());
+            UserWeightHeight entry = new UserWeightHeight(user.get(), weight, height, LocalDate.now());
             userWeightHeightRepository.save(entry);
             return true;
         }

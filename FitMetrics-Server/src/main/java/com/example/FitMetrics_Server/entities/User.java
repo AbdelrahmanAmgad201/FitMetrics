@@ -30,7 +30,7 @@ public class User {
     private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<user_weight_height> userWeightHeightEntries;
+    private List<UserWeightHeight> userWeightHeightEntries;
 
     // Constructors
     public User() {
@@ -106,11 +106,11 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<user_weight_height> getUserWeightHeightEntries() {
+    public List<UserWeightHeight> getUserWeightHeightEntries() {
         return userWeightHeightEntries;
     }
 
-    public void setUserWeightHeightEntries(List<user_weight_height> userWeightHeightEntries) {
+    public void setUserWeightHeightEntries(List<UserWeightHeight> userWeightHeightEntries) {
         this.userWeightHeightEntries = userWeightHeightEntries;
     }
 
