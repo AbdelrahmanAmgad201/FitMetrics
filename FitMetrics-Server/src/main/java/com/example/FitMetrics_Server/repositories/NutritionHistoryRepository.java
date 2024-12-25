@@ -34,4 +34,46 @@ public interface NutritionHistoryRepository extends JpaRepository<UserNutritionH
     );
 
 
+    @Query("SELECT FUNCTION('DATE', nh.date) as date, SUM(fd.protein) as totalProtein " +
+            "FROM UserNutritionHistory nh " +
+            "JOIN nh.foodData fd " +
+            "WHERE nh.user.id = :userId " +
+            "AND nh.date >= :startDate " +
+            "AND nh.date < :endDate " +
+            "GROUP BY FUNCTION('DATE', nh.date) " +
+            "ORDER BY date")
+    List<Object[]> findDailyProteinTotalsByDateRange(
+            @Param("userId") Long userId,
+            @Param("startDate") java.sql.Date startDate,
+            @Param("endDate") java.sql.Date endDate
+    );
+
+
+    @Query("SELECT FUNCTION('DATE', nh.date) as date, SUM(fd.carbohydrates) as totalCarbs " +
+            "FROM UserNutritionHistory nh " +
+            "JOIN nh.foodData fd " +
+            "WHERE nh.user.id = :userId " +
+            "AND nh.date >= :startDate " +
+            "AND nh.date < :endDate " +
+            "GROUP BY FUNCTION('DATE', nh.date) " +
+            "ORDER BY date")
+    List<Object[]> findDailyCarbsTotalsByDateRange(
+            @Param("userId") Long userId,
+            @Param("startDate") java.sql.Date startDate,
+            @Param("endDate") java.sql.Date endDate
+    );
+
+    @Query("SELECT FUNCTION('DATE', nh.date) as date, SUM(fd.energy) as totalEnergy " +
+            "FROM UserNutritionHistory nh " +
+            "JOIN nh.foodData fd " +
+            "WHERE nh.user.id = :userId " +
+            "AND nh.date >= :startDate " +
+            "AND nh.date < :endDate " +
+            "GROUP BY FUNCTION('DATE', nh.date) " +
+            "ORDER BY date")
+    List<Object[]> findDailyEnergyTotalsByDateRange(
+            @Param("userId") Long userId,
+            @Param("startDate") java.sql.Date startDate,
+            @Param("endDate") java.sql.Date endDate
+    );
 }
