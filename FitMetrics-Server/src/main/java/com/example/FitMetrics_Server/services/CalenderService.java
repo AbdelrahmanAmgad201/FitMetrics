@@ -5,9 +5,11 @@ import com.example.FitMetrics_Server.entities.UserExerciseHistory;
 import com.example.FitMetrics_Server.entities.UserNutritionHistory;
 import com.example.FitMetrics_Server.repositories.ExerciseHistoryRepository;
 import com.example.FitMetrics_Server.repositories.NutritionHistoryRepository;
+import com.example.FitMetrics_Server.repositories.UserWeightHeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,8 @@ public class CalenderService {
     ExerciseHistoryRepository exerciseHistoryRepository;
     @Autowired
     NutritionHistoryRepository nutritionHistoryRepository;
+    @Autowired
+    UserWeightHeightRepository userWeightHeightRepository;
 
     public List<Date> getWorkDays(Long userId, int year, int month) {
         return exerciseHistoryRepository.findAllDatesByUserAndYearMonth(userId, year, month);
@@ -54,5 +58,10 @@ public class CalenderService {
         allDayData.add(exerciseListRes);
         allDayData.add(foodListRes);
         return allDayData;
+    }
+
+    public boolean isTodayRecorded(Long userId) {
+        LocalDate today = LocalDate.now();
+        return userWeightHeightRepository.existsByUserAndDate(userId, today);
     }
 }
