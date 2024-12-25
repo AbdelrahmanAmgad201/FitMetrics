@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -74,6 +76,27 @@ public class CalenderController {
             return ResponseEntity.ok(calenderService.recordTodayWeightHeight(userId, weight, height));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error recording today: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/graph")
+    public ResponseEntity<?> getGraphData(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long userId = Long.parseLong(claims.getId());
+            LocalDate startDate = LocalDate.parse((String) userdata.get("start_date"));
+            LocalDate endDate = LocalDate.parse((String) userdata.get("end_date"));
+            switch (((String) userdata.get("type"))) {
+                case "protein":
+                    return ResponseEntity.ok(calenderService.getDailyTotalProtein(userId, startDate, endDate));
+                case "energy":
+                    return null;
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting graph data: " + e.getMessage());
         }
     }
 

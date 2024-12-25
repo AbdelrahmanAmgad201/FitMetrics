@@ -84,8 +84,10 @@ public class CalenderService {
     }
 
     public List<Map<LocalDate, Double>> getDailyTotalProtein(Long userId, LocalDate startDate, LocalDate endDate) {
+        endDate = endDate.plusDays(1);
         java.sql.Date start = java.sql.Date.valueOf(startDate);
         java.sql.Date end = java.sql.Date.valueOf(endDate);
+
 
         List<Object[]> dailyTotalProtein = nutritionHistoryRepository.findDailyProteinTotalsByDateRange(userId, start, end);
 
