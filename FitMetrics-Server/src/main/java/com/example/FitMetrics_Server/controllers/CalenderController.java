@@ -60,4 +60,21 @@ public class CalenderController {
             return ResponseEntity.badRequest().body("Error checking if today is recorded: " + e.getMessage());
         }
     }
+
+
+    @PostMapping("/record-today")
+    public ResponseEntity<?> recordToday(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long userId = Long.parseLong(claims.getId());
+
+            double weight = (double) userdata.get("weight");
+            double height = (double) userdata.get("height");
+            return ResponseEntity.ok(calenderService.recordTodayWeightHeight(userId, weight, height));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error recording today: " + e.getMessage());
+        }
+    }
+
 }
