@@ -49,7 +49,7 @@ public interface NutritionHistoryRepository extends JpaRepository<UserNutritionH
     );
 
 
-    @Query("SELECT FUNCTION('DATE', nh.date) as date, SUM(fd.carbs) as totalCarbs " +
+    @Query("SELECT FUNCTION('DATE', nh.date) as date, SUM(fd.carbohydrates) as totalCarbs " +
             "FROM UserNutritionHistory nh " +
             "JOIN nh.foodData fd " +
             "WHERE nh.user.id = :userId " +

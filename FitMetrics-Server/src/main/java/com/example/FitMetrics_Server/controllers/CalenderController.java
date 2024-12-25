@@ -87,6 +87,7 @@ public class CalenderController {
             Long userId = Long.parseLong(claims.getId());
             LocalDate startDate = LocalDate.parse((String) userdata.get("start_date"));
             LocalDate endDate = LocalDate.parse((String) userdata.get("end_date"));
+            endDate = endDate.plusDays(1);
             switch (((String) userdata.get("type"))) {
                 case "protein":
                     return ResponseEntity.ok(calenderService.getDailyTotalProtein(userId, startDate, endDate));
@@ -94,6 +95,8 @@ public class CalenderController {
                     return ResponseEntity.ok(calenderService.getDailyTotalCalories(userId, startDate, endDate));
                 case "carbohydrates":
                     return ResponseEntity.ok(calenderService.getDailyTotalCarbohydrates(userId, startDate, endDate));
+                default:
+                    return ResponseEntity.badRequest().body("Invalid graph type");
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error getting graph data: " + e.getMessage());
