@@ -91,9 +91,9 @@ public class CalenderController {
                 case "protein":
                     return ResponseEntity.ok(calenderService.getDailyTotalProtein(userId, startDate, endDate));
                 case "energy":
-                    return null;
-                default:
-                    return null;
+                    return ResponseEntity.ok(calenderService.getDailyTotalCalories(userId, startDate, endDate));
+                case "carbohydrates":
+                    return ResponseEntity.ok(calenderService.getDailyTotalCarbohydrates(userId, startDate, endDate));
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error getting graph data: " + e.getMessage());
