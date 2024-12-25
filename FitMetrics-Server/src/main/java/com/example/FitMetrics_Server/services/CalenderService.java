@@ -1,10 +1,9 @@
 package com.example.FitMetrics_Server.services;
 
-import com.example.FitMetrics_Server.entities.FoodData;
-import com.example.FitMetrics_Server.entities.UserExerciseHistory;
-import com.example.FitMetrics_Server.entities.UserNutritionHistory;
+import com.example.FitMetrics_Server.entities.*;
 import com.example.FitMetrics_Server.repositories.ExerciseHistoryRepository;
 import com.example.FitMetrics_Server.repositories.NutritionHistoryRepository;
+import com.example.FitMetrics_Server.repositories.UserRepository;
 import com.example.FitMetrics_Server.repositories.UserWeightHeightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,9 @@ public class CalenderService {
     NutritionHistoryRepository nutritionHistoryRepository;
     @Autowired
     UserWeightHeightRepository userWeightHeightRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public List<Date> getWorkDays(Long userId, int year, int month) {
         return exerciseHistoryRepository.findAllDatesByUserAndYearMonth(userId, year, month);
@@ -63,5 +65,21 @@ public class CalenderService {
     public boolean isTodayRecorded(Long userId) {
         LocalDate today = LocalDate.now();
         return userWeightHeightRepository.existsByUserAndDate(userId, today);
+    }
+
+    public boolean recordTodayWeightHeight(Long userId, double weight, double height) {
+        LocalDate today = LocalDate.now();
+        if (userWeightHeightRepository.existsByUserAndDate(userId, today)) {
+            return false;
+        }
+
+        if (userRepository.findById(userId).isEmpty()) {
+            return false;
+        }
+
+        User user = userRepository.findById(userId).get();
+        UserWeightHeight userWeightHeight = new UserWeightHeight(user, weight, height, today);
+        userWeightHeightRepository.save(userWeightHeight);
+        return true;
     }
 }
