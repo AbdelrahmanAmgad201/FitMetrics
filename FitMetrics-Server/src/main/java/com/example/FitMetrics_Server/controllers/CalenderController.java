@@ -48,4 +48,16 @@ public class CalenderController {
             return ResponseEntity.badRequest().body("Error getting all day data: " + e.getMessage());
         }
     }
+
+    @GetMapping("/is-today-recorded")
+    public ResponseEntity<?> isTodayRecorded(@RequestHeader("Authorization") String token) {
+        try {
+            token = token.replace("Bearer ", "");
+            Claims claims = authService.parseToken(token);
+            Long userId = Long.parseLong(claims.getId());
+            return ResponseEntity.ok(calenderService.isTodayRecorded(userId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error checking if today is recorded: " + e.getMessage());
+        }
+    }
 }
