@@ -82,4 +82,19 @@ public class CalenderService {
         userWeightHeightRepository.save(userWeightHeight);
         return true;
     }
+
+    public List<Map<LocalDate, Double>> getDailyTotalProtein(Long userId, LocalDate startDate, LocalDate endDate) {
+        java.sql.Date start = java.sql.Date.valueOf(startDate);
+        java.sql.Date end = java.sql.Date.valueOf(endDate);
+
+        List<Object[]> dailyTotalProtein = nutritionHistoryRepository.findDailyProteinTotalsByDateRange(userId, start, end);
+
+        return dailyTotalProtein.stream()
+                .map(row -> {
+                    Map<LocalDate, Double> dailyProtein = new HashMap<>();
+                    dailyProtein.put(((java.sql.Date) row[0]).toLocalDate(), (Double) row[1]);
+                    return dailyProtein;
+                })
+                .collect(Collectors.toList());
+    }
 }
