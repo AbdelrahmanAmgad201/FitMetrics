@@ -25,9 +25,6 @@ public class UserWeightHeight {
         this.date = date;
     }
 
-    public user_weight_height() {
-
-    }
 
     public Long getId() {
         return id;
