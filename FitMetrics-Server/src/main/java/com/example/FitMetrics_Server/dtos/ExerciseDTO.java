@@ -5,12 +5,32 @@ public class ExerciseDTO {
     private String exerciseName;
     private String exerciseId;
     private int day;
+    private int sets;
+    private int reps;
 
-    public ExerciseDTO(Long id, String exerciseName, String exerciseId, int day) {
+    public ExerciseDTO(Long id, String exerciseName, String exerciseId, int day, int sets, int reps) {
         this.id = id;
-        this.exerciseName = exerciseId;
+        this.exerciseName = exerciseName;
         this.exerciseId = exerciseId;
         this.day = day;
+        this.sets = sets;
+        this.reps = reps;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
     }
 
     public Long getId() {

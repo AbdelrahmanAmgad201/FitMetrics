@@ -2,6 +2,7 @@ package com.example.FitMetrics_Server.controllers;
 
 import com.example.FitMetrics_Server.dtos.ExerciseCreateRequest;
 import com.example.FitMetrics_Server.dtos.ExerciseDTO;
+import com.example.FitMetrics_Server.dtos.ExerciseSetsRepsUpdateRequest;
 import com.example.FitMetrics_Server.dtos.WorkoutPlanDTO;
 import com.example.FitMetrics_Server.entities.Exercise;
 import com.example.FitMetrics_Server.services.WorkoutPlanService;
@@ -51,5 +52,19 @@ public class WorkoutPlanController {
             @RequestBody Exercise exercise) {
         ExerciseDTO newExercise = workoutPlanService.addExerciseToPlan(planId, userId, exercise);
         return ResponseEntity.ok(newExercise);
+    }
+
+    @PutMapping("/exercises/{exerciseId}")
+    public ResponseEntity<ExerciseDTO> updateExerciseSetsAndReps(
+            @PathVariable Long exerciseId,
+            @RequestParam Long userId,
+            @RequestBody ExerciseSetsRepsUpdateRequest request) {
+        ExerciseDTO updatedExercise = workoutPlanService.updateExerciseSetsAndReps(
+                exerciseId,
+                userId,
+                request.getSets(),
+                request.getReps()
+        );
+        return ResponseEntity.ok(updatedExercise);
     }
 }
