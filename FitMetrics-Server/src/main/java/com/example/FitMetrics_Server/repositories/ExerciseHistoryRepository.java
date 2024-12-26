@@ -13,7 +13,7 @@ public interface ExerciseHistoryRepository extends JpaRepository<UserExerciseHis
 
     @Query("SELECT u.date " +
             "FROM UserExerciseHistory u " +
-            "WHERE u.user.id = :userId " +
+            "WHERE u.user.user_id = :userId " +
             "AND FUNCTION('YEAR', u.date) = :year " +
             "AND FUNCTION('MONTH', u.date) = :month")
     List<Date> findAllDatesByUserAndYearMonth(@Param("userId") Long userId,
@@ -22,7 +22,23 @@ public interface ExerciseHistoryRepository extends JpaRepository<UserExerciseHis
 
     @Query("SELECT u " +
             "FROM UserExerciseHistory u " +
-            "WHERE u.user.id = :userId " +
+            "WHERE u.user.user_id = :userId " +
             "AND u.date = :date")
     List<UserExerciseHistory> findAllByUserAndDate(Long userId, Date date);
+
+
+    @Query("SELECT ueh FROM UserExerciseHistory ueh " +
+            "WHERE ueh.user.user_id = :userId " +
+            "AND ueh.exerciseName = :exerciseName " +
+            "AND ueh.date BETWEEN :startDate AND :endDate " +
+            "ORDER BY ueh.date ASC")
+    List<UserExerciseHistory> findUserExerciseHistoryBetweenDates(
+            @Param("userId") Long userId,
+            @Param("exerciseName") String exerciseName,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
+
+    List<UserExerciseHistory> findByUserIdAndDate(Long userId, Date date);
+
 }

@@ -1,16 +1,21 @@
 package com.example.FitMetrics_Server.services;
 
 import com.example.FitMetrics_Server.dtos.ExerciseDTO;
+import com.example.FitMetrics_Server.dtos.TodayExerciseDTO;
 import com.example.FitMetrics_Server.dtos.WorkoutPlanDTO;
 import com.example.FitMetrics_Server.entities.Exercise;
 import com.example.FitMetrics_Server.entities.User;
+import com.example.FitMetrics_Server.entities.UserExerciseHistory;
 import com.example.FitMetrics_Server.entities.WorkoutPlan;
+import com.example.FitMetrics_Server.repositories.ExerciseHistoryRepository;
 import com.example.FitMetrics_Server.repositories.UserRepository;
 import com.example.FitMetrics_Server.repositories.WorkoutPlanRepository;
 import com.example.FitMetrics_Server.repositories.ExerciseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,11 +26,13 @@ public class WorkoutPlanService {
     private final WorkoutPlanRepository workoutPlanRepository;
     private final ExerciseRepository exerciseRepository;
     private final UserRepository userRepository;
+    private final ExerciseHistoryRepository userExerciseHistoryRepository;
     // Constructor injection
-    public WorkoutPlanService(ExerciseRepository exerciseRepository, WorkoutPlanRepository workoutPlanRepository , UserRepository userRepository) {
+    public WorkoutPlanService(ExerciseRepository exerciseRepository, WorkoutPlanRepository workoutPlanRepository , UserRepository userRepository, ExerciseHistoryRepository userExerciseHistoryRepository) {
         this.exerciseRepository = exerciseRepository;
         this.workoutPlanRepository = workoutPlanRepository;
         this.userRepository = userRepository;
+        this.userExerciseHistoryRepository = userExerciseHistoryRepository;
     }
 
     public List<WorkoutPlanDTO> getUserWorkoutPlansWithExercises(Long userId) {
@@ -187,5 +194,56 @@ public class WorkoutPlanService {
         // Save and return
         Exercise updatedExercise = exerciseRepository.save(exercise);
         return convertToExerciseDTO(updatedExercise);
+    }
+
+    public List<TodayExerciseDTO> getTodayWorkouts(Long userId, Date date) {
+        // Get the day of week (1-7, where 1 is Sunday)
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        // Convert Sunday-Saturday format to Saturday-Friday format (1-7)
+        int adjustedDay = dayOfWeek == Calendar.SUNDAY ? 7 : dayOfWeek - 1;
+
+        // Get user's workout plan
+        List<WorkoutPlan> userPlans = workoutPlanRepository.findByCreatedByUser_Id(userId);
+        if (userPlans.isEmpty()) {
+            return List.of();
+        }
+
+        // We know user can only have one plan
+        WorkoutPlan userPlan = userPlans.get(0);
+
+        // Get exercises for today
+        List<Exercise> todayExercises = exerciseRepository.findExercisesByPlanIdAndDay(userPlan.getPlanId(), adjustedDay);
+
+        // Get completed exercises for today
+        List<UserExerciseHistory> completedExercises = userExerciseHistoryRepository
+                .findByUserIdAndDate(userId, date);
+
+        // Create a map of completed exercises for easy lookup
+        Map<String, UserExerciseHistory> completedExercisesMap = completedExercises.stream()
+                .collect(Collectors.toMap(
+                        UserExerciseHistory::getExerciseName,
+                        history -> history,
+                        (existing, replacement) -> existing  // Keep first in case of duplicates
+                ));
+
+        // Convert to DTOs with completion status
+        return todayExercises.stream()
+                .map(exercise -> {
+                    UserExerciseHistory history = completedExercisesMap.get(exercise.getExerciseName());
+                    return new TodayExerciseDTO(
+                            exercise.getId(),
+                            exercise.getExerciseName(),
+                            exercise.getExerciseId(),
+                            exercise.getSets(),
+                            exercise.getReps(),
+                            history != null,  // completed status
+                            history != null ? history.getSets() : 0,  // completed sets
+                            history != null ? history.getReps() : 0   // completed reps
+                    );
+                })
+                .collect(Collectors.toList());
     }
 }

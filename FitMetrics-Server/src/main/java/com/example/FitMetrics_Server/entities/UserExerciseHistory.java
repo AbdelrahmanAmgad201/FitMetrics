@@ -27,6 +27,13 @@ public class UserExerciseHistory {
     public UserExerciseHistory() {
     }
 
+    public UserExerciseHistory(User user, Date date, int sets, int reps, String exerciseName) {
+        this.user = user;
+        this.date = date;
+        this.sets = sets;
+        this.reps = reps;
+        this.exerciseName = exerciseName;
+    }
 
     public long getId() {
         return id;
