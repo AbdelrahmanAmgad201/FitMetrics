@@ -1,15 +1,14 @@
 package com.example.FitMetrics_Server.controllers;
 
-import com.example.FitMetrics_Server.dtos.ExerciseCreateRequest;
-import com.example.FitMetrics_Server.dtos.ExerciseDTO;
-import com.example.FitMetrics_Server.dtos.ExerciseSetsRepsUpdateRequest;
-import com.example.FitMetrics_Server.dtos.WorkoutPlanDTO;
+import com.example.FitMetrics_Server.dtos.*;
 import com.example.FitMetrics_Server.entities.Exercise;
 import com.example.FitMetrics_Server.services.WorkoutPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -66,5 +65,16 @@ public class WorkoutPlanController {
                 request.getReps()
         );
         return ResponseEntity.ok(updatedExercise);
+    }
+
+    @GetMapping("/today")
+    public ResponseEntity<List<TodayExerciseDTO>> getTodayWorkouts(
+            @RequestParam Long userId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+
+        // If date is not provided, use today's date
+        Date targetDate = date != null ? date : new Date();
+        List<TodayExerciseDTO> todayWorkouts = workoutPlanService.getTodayWorkouts(userId, targetDate);
+        return ResponseEntity.ok(todayWorkouts);
     }
 }
