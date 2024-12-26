@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
-import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
+import WorkoutPlan from './current-workout_plan/WorkoutPlan.jsx'
 import MyCalendar from './scheduleManager/calendar.jsx'
 import Dashboard from './DashPage/Dashboard.jsx';
 import Workout_plans from './workout-plans/workout_plans.jsx'
-import Nutrition_plans from './nutrition-plans/nutrition_plans.jsx';
-
+import Nutrition_plan from './current-nutrition-plan/nutrition-plan.jsx';
 import analytics_img from "./assets/analytics.png"
 import calender_img from "./assets/calender.png"
 import dashboard_img from "./assets/dashboard.png"
@@ -141,7 +140,7 @@ function App(props) {
           {showWorkoutPlan && <WorkoutPlan userJWT={props.userJWT} />}
           {showDashboard && <Dashboard userJWT={props.userJWT} />}
           {showWorkoutPlans && <Workout_plans />}
-          {showNutritionPlans && <Nutrition_plans />}
+          {showNutritionPlan && <Nutrition_plan />}
         </div>
       </div>
     </div>

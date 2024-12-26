@@ -42,11 +42,11 @@ function Control() {
 
     return (
         <div className='control-body'>
-            {/* {showLoginPage && <Login registrationPage={goToRegistrationPage} appPage={goToApp} userJWT={userJWT} />}
+            {showLoginPage && <Login registrationPage={goToRegistrationPage} appPage={goToApp} userJWT={userJWT} />}
             {showRegistrationPage && <Registration loginPage={goToLoginPage} userSignupDataPage={goToUserSignupData} userJWT={userJWT} />}
             {showAppPage && <App userJWT={userJWT} />}
-            {showUserSignupData && <UserSignupData appPage={goToApp} userJWT={userJWT}/>} */}
-            <App userJWT={userJWT} />
+            {showUserSignupData && <UserSignupData appPage={goToApp} userJWT={userJWT}/>}
+            {/* <App userJWT={userJWT} /> */}
         </div>
     )
 }
