@@ -20,7 +20,29 @@ public class Exercise {
     @Column(name = "exercise_id")
     private String exerciseId;
 
+    @Column(name = "sets")
+    private int sets;
+
+    @Column(name = "reps")
+    private int reps;
+
     public Exercise() {
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
     }
 
     public Long getId() {

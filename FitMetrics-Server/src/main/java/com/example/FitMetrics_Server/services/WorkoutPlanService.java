@@ -60,9 +60,12 @@ public class WorkoutPlanService {
                 exercise.getId(),
                 exercise.getExerciseName(),
                 exercise.getExerciseId(),
-                exercise.getDay()
+                exercise.getDay(),
+                exercise.getSets(),
+                exercise.getReps()  // Fixed: now correctly passing reps instead of sets twice
         );
     }
+
 
     @Transactional
     public WorkoutPlanDTO copyWorkoutPlan(Long planId, Long targetUserId) {
@@ -100,6 +103,8 @@ public class WorkoutPlanService {
                     newExercise.setExerciseName(originalExercise.getExerciseName());
                     newExercise.setExerciseId(originalExercise.getExerciseId());
                     newExercise.setDay(originalExercise.getDay());
+                    newExercise.setSets(originalExercise.getSets());
+                    newExercise.setReps(originalExercise.getReps());
                     newExercise.setWorkoutPlan(savedPlan);
                     return newExercise;
                 })
@@ -128,23 +133,28 @@ public class WorkoutPlanService {
 
     @Transactional
     public ExerciseDTO addExerciseToPlan(Long planId, Long userId, Exercise newExercise) {
-        // Validate day range
+        // Existing validations
         if (newExercise.getDay() < 1 || newExercise.getDay() > 7) {
             throw new RuntimeException("Invalid day: must be between 1 and 7");
+        }
+
+        // New validations for sets and reps
+        if (newExercise.getSets() < 1) {
+            throw new RuntimeException("Sets must be at least 1");
+        }
+
+        if (newExercise.getReps() < 1) {
+            throw new RuntimeException("Reps must be at least 1");
         }
 
         WorkoutPlan plan = workoutPlanRepository.findById(planId)
                 .orElseThrow(() -> new RuntimeException("Workout plan not found"));
 
-        // Verify the plan belongs to the user
         if (!plan.getCreatedBy().getId().equals(userId)) {
             throw new RuntimeException("Unauthorized: This plan doesn't belong to you");
         }
 
-        // Set the workout plan for the new exercise
         newExercise.setWorkoutPlan(plan);
-
-        // Save the exercise
         Exercise savedExercise = exerciseRepository.save(newExercise);
 
         return convertToExerciseDTO(savedExercise);
