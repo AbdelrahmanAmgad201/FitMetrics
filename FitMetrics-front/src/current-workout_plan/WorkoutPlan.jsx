@@ -4,21 +4,16 @@ import Card from './Card.jsx';
 import Spinner from 'react-bootstrap/Spinner';
 
 function WorkoutPlan(props) {
+  const URL = "http://localhost:8080/api/workout-plans"
   const [workoutPlanData, setWorkoutPlanData] = useState(null);
   const userId = useRef(1);
   const planId = useRef(1);
-
-  const idToDay = (id) => {
-    const days = [
-      "Saturday", "Sunday", "Monday", "Tuesday", 
-      "Wednesday", "Thursday", "Friday"
-    ];
-    return days[id];
-  };
   
 
   const fetchUserWorkOuts = async () => {
-    const url = `http://localhost:8080/api/workout-plans/user/${userId.current}`;
+    const url = `${URL}/user/${userId.current}`;
+    console.log("id" + userId.current)
+
     let data;
 
     try {
@@ -33,9 +28,7 @@ function WorkoutPlan(props) {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-
-        //setWorkoutPlanData(result);
-
+        setWorkoutPlanData(result[0]);
       } else {
         console.error('Failed to fetch workout data');
       }
@@ -44,135 +37,165 @@ function WorkoutPlan(props) {
     }
   };
 
+  // Simulate the fetchUserWorkOuts call by setting the dummy data
   useEffect(() => {
-    // Simulate API call to fetch data with a 3-second delay
     fetchUserWorkOuts();
-
-    const timeout = setTimeout(() => {
-      const data = {
-        Saturday: {
-          level: "Beginner",
-          exercises: [
-            { exerciseId: 0, exerciseName: "Incline push-up", reps: 8, sets: 3 },
-            { exerciseId: 0,exerciseName: "Chest Dip", reps: 8, sets: 3 },
-            { exerciseId: 0,exerciseName: "Standing fly", reps: 8, sets: 3 },
-            { exerciseId: 0,exerciseName: "Side plank", reps: 8, sets: 3 }
-          ]
-        },
-        Sunday: {
-          level: "Rest day",
-          exercises: []
-        },
-        Monday: {
-          level: "Intermediate",
-          exercises: [
-            { exerciseId: 0,exerciseName: "Push-ups", reps: 10, sets: 4 },
-            { exerciseId: 0,exerciseName: "Bench press", reps: 10, sets: 4 },
-            { exerciseId: 0,exerciseName: "Bicep curls", reps: 10, sets: 4 },
-            { exerciseId: 0,exerciseName: "Plank", reps: 1, sets: 1 }
-          ]
-        },
-        Tuesday: {
-          level: "Advanced",
-          exercises: [
-            { exerciseId: 0,exerciseName: "Pull-ups", reps: 12, sets: 5 },
-            { exerciseId: 0,exerciseName: "Deadlift", reps: 10, sets: 5 },
-            { exerciseId: 0,exerciseName: "Squats", reps: 15, sets: 5 },
-            { exerciseId: 0,exerciseName: "Leg raises", reps: 12, sets: 5 }
-          ]
-        },
-        Wednesday: {
-          level: "Rest day",
-          exercises: []
-        },
-        Thursday: {
-          level: "Intermediate",
-          exercises: [
-            { exerciseId: 0,exerciseName: "Push-ups", reps: 15, sets: 4 },
-            { exerciseId: 0,exerciseName: "Shoulder press", reps: 12, sets: 4 },
-            { exerciseId: 0,exerciseName: "Crunches", reps: 20, sets: 4 },
-            { exerciseId: 0,exerciseName: "Mountain climbers", reps: 20, sets: 4 }
-          ]
-        },
-        Friday: {
-          level: "Intermediate",
-          exercises: [
-            { exerciseId: 0,exerciseName: "Push-ups", reps: 15, sets: 4 },
-            { exerciseId: 0,exerciseName: "Shoulder press", reps: 12, sets: 4 },
-            { exerciseId: 0,exerciseName: "Crunches", reps: 20, sets: 4 },
-            { exerciseId: 0,exerciseName: "Mountain climbers", reps: 20, sets: 4 }
-          ]
-        }
-      };
-
-      setWorkoutPlanData(data);
-    }, 1000);
-
-    // Cleanup timeout when component is unmounted
-    return () => clearTimeout(timeout);
   }, []);
-
 
   if (!workoutPlanData) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      <div className="spinner-container" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Spinner animation="border" role="status">
+          </Spinner>
+          <p style={{ color: 'white' }}>Fetching workout data...</p>
+        </div>
+        <hr style={{ width: '50%', borderColor: 'white', margin: '20px 0' }} />
+        <p className="animated" style={{ color: 'red' }}>Make sure you have activated a plan!</p>
+      </div>
     );
   }
+  
+  
 
-  const updateData = (dayId, newExercise) => {
-    const day = idToDay(dayId);
-    setWorkoutPlanData((prevData) => {
-      const updatedData = { ...prevData };
+  // Initialize all days of the week (1-indexed: Sunday=1, Monday=2, ..., Saturday=7)
+  const allDays = {
+    0: "Saturday",
+    1: "Sunday", 
+    2: "Monday", 
+    3: "Tuesday", 
+    4: "Wednesday", 
+    5: "Thursday", 
+    6: "Friday", 
+  };
+
+  // Map exercises to their respective days
+  const exercisesByDay = workoutPlanData.exercises.reduce((acc, exercise) => {
+    const dayName = exercise.day - 1;
+    if (!acc[dayName]) {
+      acc[dayName] = [];
+    }
+    acc[dayName].push(exercise);
+    return acc;
+  }, {});
+
+  // Ensure all days have an entry (even if empty)
+  const exercisesByDayWithAllDays = Object.keys(allDays).reduce((acc, dayId) => {
+    if (!acc[dayId]) {
+      acc[dayId] = [];
+    }
+    return acc;
+  }, { ...exercisesByDay });
+
+  const updateData = async (newExercise) => {
+    try {
+      const response = await fetch(`${URL}/${planId.current}/exercises?userId=${userId.current}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${props.userJWT.current}`
+        },
+        body: JSON.stringify(newExercise)
+      });
   
-      // Check if the exercise already exists based on the exerciseName
-      const exerciseExists = updatedData[day].exercises.some(
-        (exercise) => exercise.exerciseName === newExercise.exerciseName
-      );
-  
-      // Only add the exercise if it doesn't already exist
-      if (!exerciseExists) {
-        updatedData[day].exercises.push(newExercise);
+      if (response.ok) {
+        const addedExercise = await response.json();
+        console.log(addedExercise)
+        setWorkoutPlanData((prevData) => ({
+          ...prevData,
+          exercises: [...prevData.exercises, addedExercise],
+        }));
+        console.log(workoutPlanData);
       } else {
-        console.log("Exercise already exists, not adding:", newExercise.exerciseName);
+        console.error('Failed to add exercise');
       }
-  
-      console.log(updatedData);
-      return updatedData;
-    });
+    } catch (error) {
+      console.error('Network error:', error);
+    }
   };
+
+
+  const modifyData = async (exerciseId, updatedExercise) => {
+    try {
+      const response = await fetch(`${URL}/exercises/${exerciseId}?userId=${userId.current}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${props.userJWT.current}`
+        },
+        body: JSON.stringify(updatedExercise)
+      });
+  
+      if (response.ok) {
+        const modifiedExercise = await response.json();
+        setWorkoutPlanData((prevData) => {
+          const updatedExercises = prevData.exercises.map(exercise =>
+            exercise.id === exerciseId ? modifiedExercise : exercise
+          );
+          return { ...prevData, exercises: updatedExercises };
+        });
+        console.log(modifiedExercise);
+      } else {
+        console.error('Failed to modify exercise');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  };
+  
+  
+  
+  const deleteData = async (exerciseId) => {
+    try {
+      const response = await fetch(`${URL}/exercises/${exerciseId}?userId=${userId.current}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${props.userJWT.current}`
+        },
+      });
+  
+      if (response.ok) {
+        setWorkoutPlanData((prevData) => {
+          const updatedData = { ...prevData };
+          const exercises = updatedData.exercises.filter(exercise => exercise.id !== exerciseId);
+          updatedData.exercises = exercises; // Ensure a new array is returned
+          return updatedData;
+        });
+      } else {
+        console.error('Failed to delete exercise');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  };
+  
+  
   
 
-  const deleteData = (dayId, oldExerciseIndex) => {
-    const day = idToDay(dayId);
-    setWorkoutPlanData((prevData) => {
-      const updatedData = { ...prevData };
-      const exercises = updatedData[day].exercises;
-      
-      // Remove exercise by index directly
-      exercises.splice(oldExerciseIndex, 1); // Removes one exercise at the specified index
-  
-      // Return the updated state
-      updatedData[day].exercises = [...exercises]; // Make sure to update the state with a new array
-      return updatedData;
-    });
-  };
-  
-  
-  
-  
-  
-  
   return (
     <div className="workout-plan-app">
-      <Card id={0} day="Saturday" data={workoutPlanData.Saturday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={1} day="Sunday" data={workoutPlanData.Sunday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={2} day="Monday" data={workoutPlanData.Monday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={3} day="Tuesday" data={workoutPlanData.Tuesday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={4} day="Wednesday" data={workoutPlanData.Wednesday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={5} day="Thursday" data={workoutPlanData.Thursday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
-      <Card id={6} day="Friday" data={workoutPlanData.Friday} updateData={updateData} userJWT={props.userJWT} userId = {userId} planId = {planId} deleteData={deleteData}/>
+      {Object.keys(exercisesByDayWithAllDays).map((dayId) => {
+        const exercises = exercisesByDayWithAllDays[dayId];
+        const planName = workoutPlanData.planName; // planName is the level
+        const dayName = allDays[dayId]; // Get the day name from the `allDays` mapping
+
+        return (
+          <Card
+            key={dayId}
+            id={dayId}
+            day={dayName}
+            level={planName} // Setting level to planName
+            data={{ exercises }}
+            updateData={updateData}
+            userJWT={props.userJWT}
+            userId={userId}
+            planId={planId}
+            deleteData={deleteData}
+            modifyData={modifyData}
+          />
+        );
+      })}
     </div>
   );
 }
