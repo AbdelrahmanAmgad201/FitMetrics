@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './Card.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -12,6 +12,10 @@ function Card(props) {
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
   const [exercises, setExercises] = useState([]);
+  const all_exercises = useRef(null);
+  const modified = useRef(null);
+
+
 
   const handleModalShow = () => setShowModal(true);
   const handleModalClose = () => setShowModal(false);
@@ -19,28 +23,48 @@ function Card(props) {
   const handleCloseAdd = () => {
     setShowAdd(false);
     setShowModal(true);
+    modified.current = null
+  };
+
+  const modifyData = (index, name) =>{
+    modified.current = {index:index, name:name}
+    console.log(modified.current)
+    setExerciseName(name)
+    setShowModal(false)
+    setShowAdd(true)
+
   };
 
   const fetchWorkOuts = async (query) => {
-    const url = 'http://localhost:8080/search?query=' + query;
+    const url = 'http://localhost:8080/exercise/all';
     let data;
+    
+    if (all_exercises.current) {
+      setExercises(all_exercises.current.excercises_ids
+        .filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase())) || []);
+      return;
+    }
+
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${props.userJWT.current}`
+
         },
       });
 
       if (response.ok) {
         const result = await response.json();
-        data = result.map((item) => item.foodName); // Assuming 'exerciseName' is a field in the result
+        data = result; 
+        all_exercises.current = data
+        setExercises(all_exercises.current.excercises_ids
+          .filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase())) || []);
       }
     } catch (error) {
       console.error('Network error:', error);
     }
-    setExercises(data || []);
-    console.log("ex: " + exercises)
   };
 
   const addWorkout = () => {
@@ -56,7 +80,12 @@ function Card(props) {
     }
 
     alert(`Added ${exerciseName} with ${reps} reps and ${sets} sets.`);
-
+    
+    if(modified.current !== null){
+      console.log("aha"+modified.current.index)
+      props.deleteData(props.id, modified.current.index)
+    }
+    
     handleCloseAdd();
 
     const newExcersise = 
@@ -65,7 +94,10 @@ function Card(props) {
       sets:sets
     };
 
+
     props.updateData(props.id, newExcersise)
+
+
     
   };
 
@@ -123,16 +155,36 @@ function Card(props) {
           </p>
           {Array.isArray(props.data.exercises) &&
             props.data.exercises.map((exercise, index) => (
-              <section key={index}>
-                <p style={{ color: 'white' }}>
-                  {`${exercise.exerciseName} (${exercise.reps} reps, ${exercise.sets} sets)`}
-                </p>
+              <div key={index}>
+                <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <p style={{ color: 'white', margin: 0 }}>
+                    {`${exercise.exerciseName} (${exercise.reps} reps, ${exercise.sets} sets)`}
+                  </p>
+                  
+                  {/* Container for Modify and Delete icons */}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                      src="modify.png"
+                      alt="Modify"
+                      style={{ width: '20px', height: '20px', cursor: 'pointer', marginRight: '10px' }}
+                      onClick={() => modifyData(index, exercise.exerciseName)} // Assuming a modify function
+                    />
+                    <img
+                      src="delete.png"
+                      alt="Delete"
+                      style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                      onClick={() => props.deleteData(props.id, index)}
+                    />
+                  </div>
+                </section>
                 {index < props.data.exercises.length - 1 && (
                   <hr style={{ borderColor: 'white', margin: '10px 0' }} />
                 )}
-              </section>
+              </div>
             ))}
         </Modal.Body>
+
+
 
         <Modal.Footer style={{ background: 'black' }}>
           <Button variant="secondary" onClick={handleModalClose}>
@@ -159,7 +211,7 @@ function Card(props) {
                   onChange={(e) => {
                     setExerciseName(e.target.value); // Update exercise name as user types
                     if (e.target.value.trim()) {
-                      fetchWorkOuts(e.target.value); // Trigger search when user types
+                      fetchWorkOuts(e.target.value);
                     }
                   }}
                   placeholder="Search for an exercise"
