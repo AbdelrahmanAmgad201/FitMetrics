@@ -80,15 +80,15 @@ public class CalenderController {
     }
 
     @GetMapping("/graph")
-    public ResponseEntity<?> getGraphData(@RequestHeader("Authorization") String token, @RequestBody Map<String, Object> userdata) {
+    public ResponseEntity<?> getGraphData(@RequestHeader("Authorization") String token, @RequestParam String type, @RequestParam String start_date, @RequestParam String end_date) {
         try {
             token = token.replace("Bearer ", "");
             Claims claims = authService.parseToken(token);
             Long userId = Long.parseLong(claims.getId());
-            LocalDate startDate = LocalDate.parse((String) userdata.get("start_date"));
-            LocalDate endDate = LocalDate.parse((String) userdata.get("end_date"));
+            LocalDate startDate = LocalDate.parse((start_date));
+            LocalDate endDate = LocalDate.parse((end_date));
             endDate = endDate.plusDays(1);
-            switch (((String) userdata.get("type"))) {
+            switch (type.toLowerCase(Locale.ROOT)) {
                 case "protein":
                     return ResponseEntity.ok(calenderService.getDailyTotalProtein(userId, startDate, endDate));
                 case "energy":
