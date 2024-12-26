@@ -159,4 +159,33 @@ public class WorkoutPlanService {
 
         return convertToExerciseDTO(savedExercise);
     }
+
+    @Transactional
+    public ExerciseDTO updateExerciseSetsAndReps(Long exerciseId, Long userId, int sets, int reps) {
+        // Find the exercise
+        Exercise exercise = exerciseRepository.findById(exerciseId)
+                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+
+        // Verify the exercise belongs to the user's plan
+        WorkoutPlan plan = exercise.getWorkoutPlan();
+        if (!plan.getCreatedBy().getId().equals(userId)) {
+            throw new RuntimeException("Unauthorized: This exercise doesn't belong to your plan");
+        }
+
+        // Validate the new values
+        if (sets < 1) {
+            throw new RuntimeException("Sets must be at least 1");
+        }
+        if (reps < 1) {
+            throw new RuntimeException("Reps must be at least 1");
+        }
+
+        // Update the exercise
+        exercise.setSets(sets);
+        exercise.setReps(reps);
+
+        // Save and return
+        Exercise updatedExercise = exerciseRepository.save(exercise);
+        return convertToExerciseDTO(updatedExercise);
+    }
 }
