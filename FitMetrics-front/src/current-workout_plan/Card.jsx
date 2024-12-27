@@ -98,10 +98,20 @@ function Card(props) {
 
   const handleAddSubmit = () => {
 
+
     if (!exerciseName || !reps || !sets) {
       alert('Please fill in all fields.');
       return;
     }
+
+    if (!all_exercises.current.excercises_ids.includes(exerciseName)) {
+      console.log(all_exercises.current.excercises_ids);
+      console.log(exerciseName);
+      alert('Exercise name is not correct!');
+      return;
+    }
+    
+    
 
     alert(`Added ${exerciseName} with ${reps} reps and ${sets} sets.`);
     
