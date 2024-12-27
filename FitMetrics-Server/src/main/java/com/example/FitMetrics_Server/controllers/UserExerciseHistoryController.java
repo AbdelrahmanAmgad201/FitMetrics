@@ -1,7 +1,9 @@
 package com.example.FitMetrics_Server.controllers;
 
 import com.example.FitMetrics_Server.dtos.ExerciseHistoryDTO;
+import com.example.FitMetrics_Server.services.AuthService;
 import com.example.FitMetrics_Server.services.UserExerciseHistoryService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -21,29 +23,36 @@ public class UserExerciseHistoryController {
         this.historyService = historyService;
     }
 
-    @GetMapping("/{userId}")
+    @Autowired
+    private AuthService authService;
+
+    @GetMapping
     public ResponseEntity<List<ExerciseHistoryDTO>> getExerciseHistory(
-            @PathVariable Long userId,
+            @RequestHeader("Authorization") String token,
             @RequestParam String exerciseName,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-
+        Long userId = extractUserIdFromToken(token);
         List<ExerciseHistoryDTO> history = historyService
                 .getExerciseHistoryBetweenDates(userId, exerciseName, startDate, endDate);
-
         return ResponseEntity.ok(history);
     }
 
-    @PostMapping("/{userId}/save")
+    @PostMapping("/save")
     public ResponseEntity<ExerciseHistoryDTO> saveExerciseHistory(
-            @PathVariable Long userId,
+            @RequestHeader("Authorization") String token,
             @RequestParam String exerciseName,
             @RequestParam int sets,
             @RequestParam int reps) {
-
+        Long userId = extractUserIdFromToken(token);
         ExerciseHistoryDTO savedHistory = historyService
                 .saveExerciseHistory(userId, exerciseName, sets, reps);
-
         return ResponseEntity.ok(savedHistory);
+    }
+
+    private Long extractUserIdFromToken(String token) {
+        token = token.replace("Bearer ", "");
+        Claims claims = authService.parseToken(token);
+        return Long.parseLong(claims.getId());
     }
 }
