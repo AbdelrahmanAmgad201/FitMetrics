@@ -119,7 +119,7 @@ function Card(props) {
       <div className="title" onClick={handleModalShow} onTouchStart={handleModalShow}>
         <p
           style={{
-            color: '#007bff',
+            color: '#021526',
             textDecoration: 'underline',
             cursor: 'pointer',
           }}
@@ -142,7 +142,7 @@ function Card(props) {
         </p>
         {Array.isArray(props.data.exercises) &&
           props.data.exercises.map((exercise, index) => (
-            <p key={index} style={{ color: 'white' }}>
+            <p key={index} style={{ color: 'white' ,fontSize: '16px'}}>
               {`${exercise.exerciseName} (${exercise.reps} reps, ${exercise.sets} sets)`}
             </p>
           ))}
@@ -170,7 +170,7 @@ function Card(props) {
             props.data.exercises.map((exercise, index) => (
               <div key={index}>
                 <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <p style={{ color: 'white', margin: 0 }}>
+                  <p style={{ color: 'white', margin: 0 , fontSize: '16px'}}>
                     {`${exercise.exerciseName} (${exercise.reps} reps, ${exercise.sets} sets)`}
                   </p>
                   

@@ -139,8 +139,8 @@ function App(props) {
           {showCalender && <MyCalendar userJWT={props.userJWT} />}
           {showWorkoutPlan && <WorkoutPlan userJWT={props.userJWT} />}
           {showDashboard && <Dashboard userJWT={props.userJWT} />}
-          {showWorkoutPlans && <Workout_plans />}
-          {showNutritionPlan && <Nutrition_plan />}
+          {showWorkoutPlans && <Workout_plans userJWT={props.userJWT} />}
+          {showNutritionPlan && <Nutrition_plan userJWT={props.userJWT} />}
         </div>
       </div>
     </div>

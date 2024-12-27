@@ -6,8 +6,8 @@ import Spinner from 'react-bootstrap/Spinner';
 function WorkoutPlan(props) {
   const URL = "http://localhost:8080/api/workout-plans"
   const [workoutPlanData, setWorkoutPlanData] = useState(null);
-  const userId = useRef(1);
-  const planId = useRef(1);
+  const userId = useRef(props.userId||1);
+  const planId = useRef(props.planId||1);
   
 
   const fetchUserWorkOuts = async () => {
@@ -28,7 +28,7 @@ function WorkoutPlan(props) {
       if (response.ok) {
         const result = await response.json();
         console.log(result);
-        setWorkoutPlanData(result[0]);
+        setWorkoutPlanData(result[0] || result);
       } else {
         console.error('Failed to fetch workout data');
       }

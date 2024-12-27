@@ -43,7 +43,9 @@
     overflow-x: auto;
     opacity: 0;
     animation: fadeIn 1s forwards;
+
 }
+
 
 .description-0 {
   animation-delay: 0s;

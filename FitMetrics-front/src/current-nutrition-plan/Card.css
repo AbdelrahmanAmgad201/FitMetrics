@@ -1,26 +1,30 @@
-.workout-card {
+.nutrition-card {
   padding: 20px;
   background-color: #0F4C75;
-  width: min(250px);
-  height: 300px;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
 }
 
-.workout-card .title{
+.nutrition-card .title {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.workout-card .title p {
-  font-size: 24px;
+.nutrition-card .title p {
+  font-size: 30px;
   font-weight: 500;
 }
 
+p {
+  font-size: 24px;
+}
 
-.workout-card .description {
+.nutrition-card .description {
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,65 +32,25 @@
   animation: fadeIn 1s ease-in-out forwards;
 }
 
-.blurred{
+.blurred {
   filter: blur(5px);
 }
 
-.description-0,
-.description-1,
-.description-2,
-.description-3,
-.description-4,
-.description-5,
-.description-6 {
-  max-height: 400px;
+.description {
+  height: 100% !important; /* Force height to 100% */
+  width: 100%;
   overflow-x: auto;
   opacity: 0;
   animation: fadeIn 1s forwards;
-}
-
-.description-0 {
-animation-delay: 0s;
-}
-
-.description-1 {
-animation-delay: 1s;
-}
-
-.description-2 {
-animation-delay: 2s;
-}
-
-.description-3 {
-animation-delay: 3s;
-}
-
-.description-4 {
-animation-delay: 4s;
-}
-
-.description-5 {
-animation-delay: 5s;
-}
-
-.description-6 {
-animation-delay: 6s;
+  animation-delay: 1s;
 }
 
 @keyframes fadeIn {
-to {
-  opacity: 1;
+  to {
+    opacity: 1;
+  }
 }
-}
 
-
-
-.description-0::-webkit-scrollbar,
-.description-1::-webkit-scrollbar,
-.description-2::-webkit-scrollbar,
-.description-3::-webkit-scrollbar,
-.description-4::-webkit-scrollbar,
-.description-5::-webkit-scrollbar,
-.description-6::-webkit-scrollbar {
-width: 0;
+.description::-webkit-scrollbar {
+  width: 0;
 }
