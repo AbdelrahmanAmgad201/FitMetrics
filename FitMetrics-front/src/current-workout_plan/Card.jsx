@@ -137,16 +137,22 @@ function Card(props) {
           margin: '0',
         }}
       >
-        <p style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
-          {props.level}
-        </p>
-        {Array.isArray(props.data.exercises) &&
+        {Array.isArray(props.data.exercises) && props.data.exercises.length > 0 ? (
           props.data.exercises.map((exercise, index) => (
-            <p key={index} style={{ color: 'white' ,fontSize: '16px'}}>
+            <p key={index} style={{ color: 'white', fontSize: '16px' }}>
               {`${exercise.exerciseName} (${exercise.reps} reps, ${exercise.sets} sets)`}
             </p>
-          ))}
+          ))
+        ) : (
+          <img
+          src="rest.png"
+          alt="Rest Icon"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+
+        />
+        )}
       </section>
+
 
       {/* Main Modal */}
       <Modal show={showModal} onHide={handleModalClose}>

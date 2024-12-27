@@ -29,6 +29,9 @@ function WorkoutPlan(props) {
         const result = await response.json();
         console.log(result);
         setWorkoutPlanData(result[0] || result);
+        planId.current = result[0].planId || result.planId
+        console.log(planId.current);
+
       } else {
         console.error('Failed to fetch workout data');
       }
@@ -42,7 +45,7 @@ function WorkoutPlan(props) {
     fetchUserWorkOuts();
   }, []);
 
-  if (!workoutPlanData) {
+  if (!workoutPlanData  || workoutPlanData.length <= 0) {
     return (
       <div className="spinner-container" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

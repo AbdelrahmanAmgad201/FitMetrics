@@ -28,6 +28,10 @@ function Nutrition_plan(props) {
         const result = await response.json();
         console.log(result);
         setnutritionPlanData(result[0] || result);
+        planId.current = result[0].planId || result.planId
+        console.log(planId.current);
+
+
       } else {
         console.error('Failed to fetch nutrition data');
       }
@@ -40,7 +44,7 @@ function Nutrition_plan(props) {
     fetchUserNutritionData();
   }, []);
 
-  if (!nutritionPlanData) {
+  if (!nutritionPlanData || nutritionPlanData.length <= 0) {
     return (
       <div className="spinner-container" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

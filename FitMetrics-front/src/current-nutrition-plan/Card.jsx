@@ -71,6 +71,13 @@ function Card(props) {
           <span style={{ color: '#021526' }}>Calories: </span>{`${props.data.calories}`}
         </p>
       </section>
+      <img
+          src="healthy.png"
+          alt="Healthy food Icon"
+          style={{ width: '30%', height: '30%', marginLeft: '75%'}}
+
+        />
+
 
 
       {/* Main Modal */}
