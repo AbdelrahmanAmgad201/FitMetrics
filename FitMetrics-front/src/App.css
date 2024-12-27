@@ -58,10 +58,9 @@ html, body {
 }
 
 .top-bar .user-identity {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 /* Main Body */

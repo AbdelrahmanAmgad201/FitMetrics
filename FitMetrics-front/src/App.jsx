@@ -2,9 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import WorkoutPlan from './workout_plan/WorkoutPlan.jsx'
 import MyCalendar from './scheduleManager/calendar.jsx'
-import Dashboard from './DashPage/Dashboard.jsx';
+import Dashboard from './DashPage/Dashboard.jsx'
 import Workout_plans from './workout-plans/workout_plans.jsx'
-import Nutrition_plans from './nutrition-plans/nutrition_plans.jsx';
+import Nutrition_plans from './nutrition-plans/nutrition_plans.jsx'
+import UserInfo from './user-info/User_info.jsx'
+import Explore_meals from './explore_meals_workouts/explore_meals.jsx'
+import Explore_workouts from './explore_meals_workouts/explore_workouts.jsx'
 
 import analytics_img from "./assets/analytics.png"
 import calender_img from "./assets/calender.png"
@@ -17,7 +20,7 @@ import streak_fire_img from "./assets/streak_fire.png"
 import notification_bell_img from "./assets/notification_bell.png"
 import logout_img from "./assets/logout_img.png"
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App(props) {
 
@@ -30,6 +33,7 @@ function App(props) {
   const [showExploreWorkouts, setShowExploreWorkouts] = useState(false)
   const [showWorkoutPlans, setShowWorkoutPlans] = useState(false)
   const [showNutritionPlans, setShowNutritionPlans] = useState(false)
+  const [showUserInfo, setShowUserInfo] = useState(false)
 
   const closeAllApps = () => {
     setShowDashboard(false)
@@ -41,6 +45,7 @@ function App(props) {
     setShowExploreWorkouts(false)
     setShowWorkoutPlans(false)
     setShowNutritionPlans(false)
+    setShowUserInfo(false)
   }
 
   useEffect(() => {
@@ -53,10 +58,10 @@ function App(props) {
   return (
     <div className="main-app">
       <div className="top-bar">
-        <div className="user-identity">
-          <img />
-          <div>mahmoud</div>
-        </div>
+        <button className="user-identity" onClick={()=>{
+          closeAllApps()
+          setShowUserInfo(true)
+        }}>mahmoud</button>
         <div className="side-buttons">
           <button>
             <img src={streak_fire_img}/>
@@ -137,11 +142,14 @@ function App(props) {
         </div>
         <div className="application">
           {/* apps here */}
+          {showUserInfo && <UserInfo />}
           {showCalender && <MyCalendar userJWT={props.userJWT} />}
           {showWorkoutPlan && <WorkoutPlan userJWT={props.userJWT} />}
           {showDashboard && <Dashboard userJWT={props.userJWT} />}
           {showWorkoutPlans && <Workout_plans />}
           {showNutritionPlans && <Nutrition_plans />}
+          {showExploreMeals && <Explore_meals />}
+          {showExploreWorkouts && <Explore_workouts />}
         </div>
       </div>
     </div>
