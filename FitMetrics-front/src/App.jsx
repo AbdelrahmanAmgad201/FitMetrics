@@ -15,6 +15,7 @@ import workout_plan_img from "./assets/workout_plan.png"
 import streak_fire_img from "./assets/streak_fire.png"
 import notification_bell_img from "./assets/notification_bell.png"
 import logout_img from "./assets/logout_img.png"
+import NutritionPlans from './nutrition-plans/nutrition_plans.jsx';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -138,9 +139,10 @@ function App(props) {
           {/* apps here */}
           {showCalender && <MyCalendar userJWT={props.userJWT} />}
           {showWorkoutPlan && <WorkoutPlan userJWT={props.userJWT} />}
+          {showNutritionPlan && <Nutrition_plan userJWT={props.userJWT} />}
           {showDashboard && <Dashboard userJWT={props.userJWT} />}
           {showWorkoutPlans && <Workout_plans userJWT={props.userJWT} />}
-          {showNutritionPlan && <Nutrition_plan userJWT={props.userJWT} />}
+          {showNutritionPlans && <NutritionPlans userJWT={props.userJWT}/>}
         </div>
       </div>
     </div>

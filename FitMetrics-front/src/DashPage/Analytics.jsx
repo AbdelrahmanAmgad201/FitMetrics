@@ -95,25 +95,18 @@ function Analytics(props) {
             );
           })}
         </svg>
-        <div className="legend">
-          {segments.map((segment, index) => (
-            <p key={index} style={{ color: segment.color }}>
-              {segment.label}: {Math.round(segment.percentage)}%
-            </p>
-          ))}
-        </div>
       </div>
       <div className="data-display">
         <p>
-          <strong>Carbohydrates:</strong> {analyticsData.current.carbohydrates.value.toFixed(0)} /{" "}
+          <strong style={{ color: '#007AFF' }}>Carbohydrates:</strong> {analyticsData.current.carbohydrates.value.toFixed(0)} /{" "}
           300 gm
         </p>
         <p>
-          <strong>Calories:</strong> {analyticsData.current.calories.value.toFixed(0)} /{" "}
+          <strong style={{ color: '#FFC542' }}>Calories:</strong> {analyticsData.current.calories.value.toFixed(0)} /{" "}
           2500 cal
         </p>
         <p>
-          <strong>Protein:</strong> {analyticsData.current.protein.value.toFixed(0)} /{" "}
+          <strong style={{ color: '#4CD964' }}>Protein:</strong> {analyticsData.current.protein.value.toFixed(0)} /{" "}
           100 gm
         </p>
       </div>

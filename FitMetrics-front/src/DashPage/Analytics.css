@@ -24,18 +24,14 @@
 
 .chart-segment {
   transition: stroke-dasharray 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
-.legend {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 12px;
-}
 
-.legend p {
-  margin: 5px 0;
-}
+
+
+
 
 .data-display {
   padding: 10px;

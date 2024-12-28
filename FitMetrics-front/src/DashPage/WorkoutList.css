@@ -11,6 +11,36 @@
   font-family: 'Inter', sans-serif;
   background-color: #1B262C;
   padding: 20px; 
+
+}
+
+
+.workoutList .workoutItems{
+  width: 100%;
+  overflow: auto;
+}
+
+/* Customize the entire scrollbar */
+.workoutList .workoutItems::-webkit-scrollbar {
+  width: 12px;       
+  height: 12px;    
+}
+
+/* Customize the scrollbar track */
+.workoutList .workoutItems::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+}
+
+/* Customize the scrollbar thumb */
+.workoutList .workoutItems::-webkit-scrollbar-thumb {
+  background: #888;  
+  border-radius: 10px; 
+}
+
+/* Change thumb color when hovered */
+.workoutList .workoutItems::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .title {
@@ -24,9 +54,53 @@
 .workoutItems {
   margin-top: 10px;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  gap: 10px; /* Space between workout items */
+  flex-direction: column;
+  gap: 10px;
+  
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out 1s forwards;
 }
+
+.loading-container {
+  position: absolute;
+  display: flex; /* Align items horizontally */
+  align-items: center; /* Vertically center the spinner and text */
+  justify-content: center; /* Horizontally center them */
+  gap: 10px; /* Space between spinner and text */
+}
+
+
+.loading-text::after {
+  content: '.';
+  animation: dot 1s steps(1) infinite; /* Animate the dots */
+}
+
+@keyframes dot {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75% {
+    content: '...';
+  }
+}
+
+
+/* Define fadeIn animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 
 .workoutItem {
   display: flex;

@@ -1,30 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./nutrition_plans.css";
 
-const NutritionPlans = () => {
-  const plans = [
-    {
-      planId: 1,
-      planName: "Bulking Plan",
-      description: "High-calorie plan designed for muscle growth.",
-      calories: 3500.0,
-      protein: 175.0,
-      carbohydrates: 450.0,
-    },
-    {
-      planId: 2,
-      planName: "Cutting Plan",
-      description: "Low-calorie plan for fat loss while preserving muscle.",
-      calories: 2000.0,
-      protein: 150.0,
-      carbohydrates: 200.0,
-    },
-  ];
-
-  const plansPerPage = 2;
-  const totalPages = Math.ceil(plans.length / plansPerPage);
+const NutritionPlans = (props) => {
+  const [plans, setPlans] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const plansPerPage = 2;
+  const totalPages = Math.ceil(plans.length / plansPerPage);
+
+  const fetchNutritionPlans = async () => {
+    fetch("http://localhost:8080/api/nutrition-plans/all") // Replace with your API endpoint
+      .then((response) => response.json())
+      .then((data) => setPlans(data))
+      .catch((error) => console.error("Error fetching nutrition plans:", error));
+  };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -42,6 +31,28 @@ const NutritionPlans = () => {
     (currentPage - 1) * plansPerPage,
     currentPage * plansPerPage
   );
+
+  const handleActivatePlan = async (plan) => {
+    console.log(plan.planId);
+
+    await fetch(`http://localhost:8080/api/nutrition-plans/duplicate?planId=${plan.planId}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${props.userJWT.current}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Duplicated Nutrition Plan:", data);
+      })
+      .catch((error) => console.error("Error duplicating nutrition plan:", error));
+  };
+
+  // Fetch nutrition plans on component mount
+  useEffect(() => {
+    fetchNutritionPlans();
+  }, []);
 
   return (
     <div className="app-container">
@@ -72,6 +83,16 @@ const NutritionPlans = () => {
               >
                 <h3>{plan.planName}</h3>
                 <p>{plan.description}</p>
+
+                <button
+                  className="activate-button"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent card selection when clicking the button
+                    handleActivatePlan(plan); // Activate plan on button click
+                  }}
+                >
+                  Activate Plan
+                </button>
               </div>
             ))}
           </div>
@@ -90,9 +111,7 @@ const NutritionPlans = () => {
           {Array.from({ length: totalPages }, (_, index) => (
             <div
               key={index}
-              className={`dot ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
+              className={`dot ${currentPage === index + 1 ? "active" : ""}`}
               onClick={() => setCurrentPage(index + 1)}
             ></div>
           ))}

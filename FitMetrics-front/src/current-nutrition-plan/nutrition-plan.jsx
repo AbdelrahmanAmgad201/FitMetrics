@@ -6,12 +6,10 @@ import Spinner from 'react-bootstrap/Spinner';
 function Nutrition_plan(props) {
   const URL = "http://localhost:8080/api/nutrition-plans";
   const [nutritionPlanData, setnutritionPlanData] = useState(null);
-  const userId = useRef(props.userId||1);
   const planId = useRef(props.planId||1);
 
   const fetchUserNutritionData = async () => {
-    const url = `${URL}/user/${userId.current}`;
-    console.log("id" + userId.current);
+    const url = `${URL}/user`;
 
     let data;
 
@@ -93,7 +91,6 @@ function Nutrition_plan(props) {
         level={nutritionPlanData.planName} // Set level to planName
         data={nutritionPlanData}
         userJWT={props.userJWT}
-        userId={userId}
         planId={planId}
         modifyData={modifyData}
       />

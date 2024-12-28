@@ -6,13 +6,11 @@ import Spinner from 'react-bootstrap/Spinner';
 function WorkoutPlan(props) {
   const URL = "http://localhost:8080/api/workout-plans"
   const [workoutPlanData, setWorkoutPlanData] = useState(null);
-  const userId = useRef(props.userId||1);
   const planId = useRef(props.planId||1);
   
 
   const fetchUserWorkOuts = async () => {
-    const url = `${URL}/user/${userId.current}`;
-    console.log("id" + userId.current)
+    const url = `${URL}/user`;
 
     let data;
 
@@ -92,7 +90,7 @@ function WorkoutPlan(props) {
 
   const updateData = async (newExercise) => {
     try {
-      const response = await fetch(`${URL}/${planId.current}/exercises?userId=${userId.current}`, {
+      const response = await fetch(`${URL}/${planId.current}/exercises`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +118,7 @@ function WorkoutPlan(props) {
 
   const modifyData = async (exerciseId, updatedExercise) => {
     try {
-      const response = await fetch(`${URL}/exercises/${exerciseId}?userId=${userId.current}`, {
+      const response = await fetch(`${URL}/exercises/${exerciseId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +148,7 @@ function WorkoutPlan(props) {
   
   const deleteData = async (exerciseId) => {
     try {
-      const response = await fetch(`${URL}/exercises/${exerciseId}?userId=${userId.current}`, {
+      const response = await fetch(`${URL}/exercises/${exerciseId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +190,6 @@ function WorkoutPlan(props) {
             data={{ exercises }}
             updateData={updateData}
             userJWT={props.userJWT}
-            userId={userId}
             planId={planId}
             deleteData={deleteData}
             modifyData={modifyData}
