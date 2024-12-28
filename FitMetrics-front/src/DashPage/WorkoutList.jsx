@@ -132,15 +132,25 @@ function WorkoutList(props) {
           </div>
         ) : workoutList.length > 0 ? (
           workoutList.map((workout, index) => (
-            <div key={index} className="workoutItem">
-              <input
-                type="checkbox"
-                id={workout.exerciseName} // Use exerciseName as ID for uniqueness
-                onChange={() => handleCheckboxChange(workout)}
-                checked={checkedWorkouts.has(workout.exerciseName)} // Only checked if it's in checkedWorkouts
-              />
-              <label htmlFor={workout.exerciseName}>{workout.exerciseName}</label>
+          <div key={index} className="workoutItem" style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <input
+              type="checkbox"
+              id={workout.exerciseName}
+              onChange={() => handleCheckboxChange(workout)}
+              checked={checkedWorkouts.has(workout.exerciseName)}
+              style={{ marginRight: '8px', marginTop: '8px' }}
+            />
+            <div>
+              <label htmlFor={workout.exerciseName} style={{ display: 'block' }}>
+                {workout.exerciseName}
+              </label>
+              <div style={{ fontSize: '0.85rem', color: '#6c757d', marginTop: '4px' }}>
+                <p style={{ fontSize: '0.85rem', color: '#6c757d', margin: '2px 0' }}>‣ reps: {workout.reps}</p>
+                <p style={{ fontSize: '0.85rem', color: '#6c757d', margin: '2px 0' }}>‣ sets: {workout.sets}</p>
+              </div>
             </div>
+          </div>
+
           ))
         ) : (
           <img
