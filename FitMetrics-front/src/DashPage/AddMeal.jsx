@@ -38,9 +38,9 @@ function AddMeal(props) {
     }
     const updatedData = data.map((item) => ({
       ...item,
-      protein: item.protein.value,
-      carbohydrates: item.carbohydrates.value,
-      energy: item.energy.value,
+      protein: item.protein ? item.protein.value : 0,
+      carbohydrates: item.carbohydrates ? item.carbohydrates.value : 0,
+      energy: item.energy ? item.energy.value : 0,
     }));
     console.log(updatedData)
     setMealOptions(updatedData); 

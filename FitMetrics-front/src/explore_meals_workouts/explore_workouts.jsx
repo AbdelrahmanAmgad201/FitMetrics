@@ -18,10 +18,10 @@ function Explore_workouts({userJWT}) {
         let data;
         
         if (all_exercises.current) {
-            console.log("already loadded exe")
-          await setSearchResults(all_exercises.current.excercises_ids.filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase())) || []);
-          console.log(searchResults)
-          return;
+            let data = all_exercises.current.excercises_ids.filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase()))
+            await setSearchResults(data.slice(0,15))
+            console.log(searchResults)
+            return;
         }
     
         try {
@@ -35,7 +35,8 @@ function Explore_workouts({userJWT}) {
           if (response.ok) {
             const result = await response.json();
             all_exercises.current = result
-            await setSearchResults(all_exercises.current.excercises_ids.filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase())) || []);
+            let data = all_exercises.current.excercises_ids.filter((exercise) => exercise.toLowerCase().startsWith(query.toLowerCase()))
+            await setSearchResults(data.slice(0,15))
           }
         } catch (error) {
           console.error('Network error:', error);
@@ -54,7 +55,6 @@ function Explore_workouts({userJWT}) {
           
           if (response.ok) {
             const result = await response.json()
-            console.log(result)
             return result
           }
         } catch (error) {

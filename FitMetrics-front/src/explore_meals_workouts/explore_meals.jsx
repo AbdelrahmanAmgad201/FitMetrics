@@ -49,7 +49,7 @@ function Explore_meals() {
             if (response.ok) {
                 const result = await response.json();
                 await setSearchResults(result)
-                await removeDuplicates()
+                // await removeDuplicates()
                 console.log(searchResults)
             }
         } catch (error) {
@@ -89,7 +89,7 @@ function Explore_meals() {
                             <tbody>
                                 {
                                     searchResults.map((meal, index)=>(
-                                        <tr>
+                                        <tr key={index}>
                                             <td>{meal.foodName}</td>
                                             <td>{meal.energy ? meal.energy.value : '-'}</td>
                                             <td>{meal.protein ? meal.protein.value : '-'}</td>
