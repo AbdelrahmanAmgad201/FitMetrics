@@ -61,19 +61,10 @@ function App(props) {
     <div className="main-app">
       <div className="top-bar">
         <button className="user-identity" onClick={()=>{
-          closeAllApps()
-          setShowUserInfo(true)
-        }}>mahmoud</button>
+          // closeAllApps()
+          // setShowUserInfo(true)
+        }}>FitMetrics</button>
         <div className="side-buttons">
-          <button>
-            <img src={streak_fire_img}/>
-          </button>
-          <button>
-            <img src={notification_bell_img}/>
-          </button>
-          <button>
-            <img src={logout_img}/>
-          </button>
         </div>
       </div>
       <div className="main-body">
@@ -97,14 +88,14 @@ function App(props) {
             setShowWorkoutPlan(true)
           }}>
             <img src={workout_plan_img}/>
-            <div>Active Workout plan</div>
+            <div>My Workout</div>
           </button>
           <button className="field" onClick={() =>{
             closeAllApps()
             setShowNutritionPlan(true)
           }}>
             <img src={nutrition_plan_img}/>
-            <div>Active Nutrition plan</div>
+            <div>My Nutrition</div>
           </button>
           <button className="field" onClick={() =>{
             closeAllApps()
@@ -118,7 +109,7 @@ function App(props) {
             setShowExploreWorkouts(true)
           }}>
             <img src={explore_workouts_img}/>
-            <div>Explore workouts</div>
+            <div style={{fontSize:'14px'}}>Explore workouts</div>
           </button>
           <button className="field" onClick={() =>{
             closeAllApps()
