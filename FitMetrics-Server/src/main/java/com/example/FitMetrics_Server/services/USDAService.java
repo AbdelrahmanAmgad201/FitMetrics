@@ -34,7 +34,7 @@ public class USDAService {
         String url = UriComponentsBuilder.fromHttpUrl(searchApiUrl)
                 .queryParam("query", query)
                 .queryParam("api_key", apiKey)
-                .queryParam("pageSize", 5)
+                .queryParam("pageSize", 25)
                 .queryParam("pageNumber", 1)
                 .toUriString();
 

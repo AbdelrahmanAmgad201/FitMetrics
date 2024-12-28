@@ -46,7 +46,6 @@ function Control() {
             {showRegistrationPage && <Registration loginPage={goToLoginPage} userSignupDataPage={goToUserSignupData} userJWT={userJWT} />}
             {showAppPage && <App userJWT={userJWT} />}
             {showUserSignupData && <UserSignupData appPage={goToApp} userJWT={userJWT}/>}
-            {/* <App userJWT={userJWT} /> */}
         </div>
     )
 }
