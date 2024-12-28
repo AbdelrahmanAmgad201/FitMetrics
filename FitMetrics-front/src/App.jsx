@@ -8,6 +8,7 @@ import Nutrition_plans from './nutrition-plans/nutrition_plans.jsx'
 import UserInfo from './user-info/User_info.jsx'
 import Explore_meals from './explore_meals_workouts/explore_meals.jsx'
 import Explore_workouts from './explore_meals_workouts/explore_workouts.jsx'
+import Analytics from './analytics/Analytics.jsx'
 
 import analytics_img from "./assets/analytics.png"
 import calender_img from "./assets/calender.png"
@@ -149,7 +150,8 @@ function App(props) {
           {showWorkoutPlans && <Workout_plans />}
           {showNutritionPlans && <Nutrition_plans />}
           {showExploreMeals && <Explore_meals />}
-          {showExploreWorkouts && <Explore_workouts />}
+          {showExploreWorkouts && <Explore_workouts userJWT={props.userJWT}/>}
+          {showAnalytics && <Analytics userJWT={props.userJWT}/>}
         </div>
       </div>
     </div>

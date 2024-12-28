@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .explore-workouts-main .explore-workouts-body {
@@ -71,10 +72,6 @@
     width: 100%;
 }
 
-.explore-workouts-main table tr {
-
-}
-
 .explore-workouts-main table th {
     border: 0.2px solid #777;
     margin: 2px;
@@ -82,10 +79,6 @@
     cursor: default;
     font-size: 20px;
     color: #eee;
-}
-
-.explore-workouts-main table tbody {
-    
 }
 
 .explore-workouts-main table tbody tr:hover {
@@ -99,4 +92,92 @@
     cursor: pointer;
     color: #eee;
     font-size: 16px;
+}
+
+.blur-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    z-index: 1;
+}
+
+.explore-workouts-main .workout-menu {
+    position: absolute;
+    width: 60%;
+    height: 90%;
+    z-index: 2;
+    background-color: #222D33;
+    border-radius: 15px;
+}
+
+.workout-plot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    padding-bottom: 40px;
+}
+
+.workout-plot .exit-plot {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.workout-menu .exit-plot button {
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: #bbb;
+    color: black;
+    font-size: 16px;
+}
+
+.workout-menu .exit-plot button:hover {
+    background-color: #eee;
+}
+
+.workout-plot .line-plot {
+    margin-top: 10px;
+}
+
+.workout-plot .plot-input {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.workout-plot .plot-input-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.workout-plot .plot-input-field input {
+    background-color: #ddd;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.workout-plot .plot-btn button{
+    padding: 5px 20px;
+    background-color: #1B262C;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.workout-plot .plot-btn button:hover {
+    outline: solid 1px #ddd;
+}
+
+.workout-plot .line-plot {
+    color: #ddd;
 }

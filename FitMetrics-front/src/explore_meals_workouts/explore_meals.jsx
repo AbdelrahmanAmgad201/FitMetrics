@@ -61,7 +61,7 @@ function Explore_meals() {
     return (
         <div className='explore-workouts-main'>
             <div className='explore-workouts-body'>
-                <div className='workout-title'>Explore Workouts</div>
+                <div className='workout-title'>Explore Meals</div>
                 <div className='searchbar-container'>
                     <div className='searchbar'>
                         <input ref={searchInput} type='text' />

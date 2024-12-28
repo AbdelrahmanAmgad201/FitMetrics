@@ -1,0 +1,67 @@
+.analytics-plot-container {
+    background-color: #213A45;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.analytics-plot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding-bottom: 40px;
+    background-color: #213A45;
+    width: 90%;
+    height: 85%;
+}
+
+.analytics-plot .select-type {
+    background-color: #ddd;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: black;
+}
+
+.analytics-plot .line-plot {
+    margin-top: 10px;
+}
+
+.analytics-plot .plot-input {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.analytics-plot .plot-input-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.analytics-plot .plot-input-field input {
+    background-color: #ddd;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.analytics-plot .plot-btn button{
+    padding: 5px 20px;
+    background-color: #1B262C;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.analytics-plot .plot-btn button:hover {
+    outline: solid 1px #ddd;
+}
+
+.analytics-plot .line-plot {
+    color: #ddd;
+}

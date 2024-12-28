@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/exercise-history")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserExerciseHistoryController {
 
     private final UserExerciseHistoryService historyService;

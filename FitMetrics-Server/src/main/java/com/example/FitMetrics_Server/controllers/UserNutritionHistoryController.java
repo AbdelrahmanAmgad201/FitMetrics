@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/nutrition")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserNutritionHistoryController {
     @Autowired
     private UserNutritionHistoryService userNutritionHistoryService;
