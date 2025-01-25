@@ -1,5 +1,6 @@
 package com.example.FitMetrics_Server.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ public class UserWeightHeight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // Composite primary key
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
